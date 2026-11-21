@@ -373,6 +373,9 @@ export function reducer(state: AppState, action: Stamped): AppState {
       return bump(state, ts, { setup: action.setup, live, events: accepted });
     }
 
+    case 'REPLACE_STATE':
+      return { ...action.state, rev: Math.max(state.rev, action.state.rev) + 1, updatedAt: ts };
+
     case 'RESET_MATCH': {
       const fresh = createInitialState(state.setup);
       return bump(state, ts, { events: [], live: fresh.live, graphics: fresh.graphics, notification: null });

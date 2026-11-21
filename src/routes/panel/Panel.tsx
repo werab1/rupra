@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { teamVars } from '../../components/color';
 import { Icon } from '../../components/Icon';
 import { activeYellowCards, displayMs, formatClock, formatShort, PERIOD_LABEL } from '../../domain/clock';
@@ -6,6 +6,7 @@ import { download, toJSON, toXML } from '../../domain/exporters';
 import { VARIANTS } from '../../domain/rules';
 import { findPlayer, matchSquad, SIDES } from '../../domain/roster';
 import type { Action, AppState, AutoKind, GraphicId, Side } from '../../domain/types';
+import { useArmed } from '../../hooks/useArmed';
 import { useMatch, useNow } from '../../hooks/useMatch';
 import type { ConnectionInfo } from '../../sync';
 import './panel.css';
@@ -29,11 +30,18 @@ const TILES: TileDef[] = [
   { key: '9', id: 'replay', title: () => 'Zopakovat oznámení', hint: 'Poslední body / karta / střídání' },
 ];
 
+const OverlayInline = lazy(() => import('../overlay/Overlay'));
+
 const AUTO_LABEL: Record<AutoKind, string> = { score: 'Body', sub: 'Střídání', card: 'Karty' };
 
-export default function Panel() {
+/**
+ * @param embedded Režim pro vložení do jiné stránky (demo/artefakt): náhled se kreslí přímo
+ * místo iframe, export se místo stažení zobrazí v okně ke zkopírování, odkazy na další routy se skryjí.
+ */
+export default function Panel({ embedded = false }: { embedded?: boolean } = {}) {
   const { state, dispatch, connection } = useMatch('panel');
   const now = useNow(200);
+  const [exportView, setExportView] = useState<{ title: string; text: string } | null>(null);
 
   // Klávesové zkratky 1–9, Esc = skrýt vše
   useEffect(() => {
@@ -58,7 +66,14 @@ export default function Panel() {
 
   return (
     <div className="pn">
-      <Header state={state} connection={connection} now={now} dispatch={dispatch} />
+      <Header
+        state={state}
+        connection={connection}
+        now={now}
+        dispatch={dispatch}
+        embedded={embedded}
+        onExport={(title, text) => setExportView({ title, text })}
+      />
       <main className="pn-main">
         <aside className="pn-left">
           <LiveBlock state={state} now={now} />
@@ -66,7 +81,7 @@ export default function Panel() {
           <EventsBlock state={state} />
         </aside>
         <section className="pn-center">
-          <Preview />
+          <Preview inline={embedded} />
           <AutoBlock state={state} now={now} dispatch={dispatch} />
         </section>
         <aside className="pn-right">
@@ -83,6 +98,50 @@ export default function Panel() {
           </div>
         </aside>
       </main>
+      {exportView && <ExportDialog {...exportView} onClose={() => setExportView(null)} />}
+    </div>
+  );
+}
+
+function ExportDialog({ title, text, onClose }: { title: string; text: string; onClose: () => void }) {
+  const [copied, setCopied] = useState(false);
+  const pre = useRef<HTMLPreElement>(null);
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+    } catch {
+      // Záloha: označit text, ať jde zkopírovat ručně.
+      const sel = window.getSelection();
+      if (pre.current && sel) {
+        const r = document.createRange();
+        r.selectNodeContents(pre.current);
+        sel.removeAllRanges();
+        sel.addRange(r);
+      }
+    }
+  };
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && (e.stopPropagation(), onClose());
+    window.addEventListener('keydown', onKey, true);
+    return () => window.removeEventListener('keydown', onKey, true);
+  }, [onClose]);
+  return (
+    <div className="pn-modal-backdrop" onClick={onClose}>
+      <div className="pn-modal" role="dialog" aria-modal="true" aria-label={title} onClick={(e) => e.stopPropagation()}>
+        <div className="pn-modal-head">
+          <b>{title}</b>
+          <button className="pn-btn" onClick={copy}>
+            {copied ? 'Zkopírováno' : 'Kopírovat'}
+          </button>
+          <button className="pn-btn pn-btn-ghost" onClick={onClose}>
+            Zavřít
+          </button>
+        </div>
+        <pre ref={pre} className="pn-modal-pre">
+          {text}
+        </pre>
+      </div>
     </div>
   );
 }
@@ -113,13 +172,18 @@ function Header({
   connection,
   now,
   dispatch,
+  embedded,
+  onExport,
 }: {
   state: AppState;
   connection: ConnectionInfo;
   now: number;
   dispatch: (a: Action) => void;
+  embedded: boolean;
+  onExport: (title: string, text: string) => void;
 }) {
   const stamp = new Date(now).toISOString().slice(0, 19).replace(/[:T]/g, '-');
+  const { armed, guard } = useArmed();
   const anyOn = Object.values(state.graphics.on).some(Boolean);
   return (
     <header className="pn-header">
@@ -158,26 +222,38 @@ function Header({
         </span>
       </div>
       <div className="pn-actions">
-        <button className="pn-btn" onClick={() => download(`rupra-${stamp}.json`, toJSON(state), 'application/json')}>
-          <Icon name="download" /> Stáhnout JSON
-        </button>
-        <button className="pn-btn" onClick={() => download(`rupra-${stamp}.xml`, toXML(state), 'application/xml')}>
-          <Icon name="download" /> Stáhnout XML
-        </button>
-        <a className="pn-btn pn-btn-ghost" href="/overlay" target="_blank" rel="noreferrer">
-          <Icon name="external" /> Overlay
-        </a>
-        <a className="pn-btn pn-btn-ghost" href="/zapis" target="_blank" rel="noreferrer">
-          <Icon name="external" /> Zápis
-        </a>
         <button
-          className="pn-btn pn-btn-ghost"
-          title="Vymaže události a skóre (soupisky zůstanou)"
-          onClick={() => {
-            if (confirm('Opravdu začít nový zápas? Skóre i události se vymažou.')) dispatch({ type: 'RESET_MATCH' });
-          }}
+          className="pn-btn"
+          onClick={() =>
+            embedded ? onExport('Stav pro vMix · JSON', toJSON(state)) : download(`rupra-${stamp}.json`, toJSON(state), 'application/json')
+          }
         >
-          Nový zápas
+          <Icon name="download" /> {embedded ? 'JSON' : 'Stáhnout JSON'}
+        </button>
+        <button
+          className="pn-btn"
+          onClick={() =>
+            embedded ? onExport('Stav pro vMix · XML', toXML(state)) : download(`rupra-${stamp}.xml`, toXML(state), 'application/xml')
+          }
+        >
+          <Icon name="download" /> {embedded ? 'XML' : 'Stáhnout XML'}
+        </button>
+        {!embedded && (
+          <>
+            <a className="pn-btn pn-btn-ghost" href="/overlay" target="_blank" rel="noreferrer">
+              <Icon name="external" /> Overlay
+            </a>
+            <a className="pn-btn pn-btn-ghost" href="/zapis" target="_blank" rel="noreferrer">
+              <Icon name="external" /> Zápis
+            </a>
+          </>
+        )}
+        <button
+          className={`pn-btn pn-btn-ghost ${armed === 'reset' ? 'is-armed' : ''}`}
+          title="Vymaže události a skóre (soupisky zůstanou)"
+          onClick={() => guard('reset', () => dispatch({ type: 'RESET_MATCH' }))}
+        >
+          {armed === 'reset' ? 'Opravdu? Klikněte znovu' : 'Nový zápas'}
         </button>
       </div>
     </header>
@@ -290,7 +366,7 @@ function EventsBlock({ state }: { state: AppState }) {
 
 // ───────────────────────────── Střed ─────────────────────────────
 
-function Preview() {
+function Preview({ inline }: { inline: boolean }) {
   const box = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0.4);
   useLayoutEffect(() => {
@@ -307,14 +383,22 @@ function Preview() {
         Náhled výstupu <span className="pn-h-meta">1920 × 1080 · průhledné pozadí</span>
       </h2>
       <div className="pn-preview" ref={box}>
-        <iframe
-          title="Náhled overlaye"
-          src="/overlay"
-          width={1920}
-          height={1080}
-          style={{ transform: `scale(${scale})` }}
-          tabIndex={-1}
-        />
+        {inline ? (
+          <div className="pn-preview-inline" style={{ transform: `scale(${scale})` }} aria-label="Náhled overlaye">
+            <Suspense fallback={null}>
+              <OverlayInline />
+            </Suspense>
+          </div>
+        ) : (
+          <iframe
+            title="Náhled overlaye"
+            src="/overlay"
+            width={1920}
+            height={1080}
+            style={{ transform: `scale(${scale})` }}
+            tabIndex={-1}
+          />
+        )}
         <div className="pn-safe" aria-hidden />
       </div>
     </section>

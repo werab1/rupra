@@ -719,3 +719,59 @@ kbd {
   background: var(--c-surface-3);
   font-size: 13px;
 }
+
+.pn-btn.is-armed {
+  border-color: var(--c-warn);
+  color: var(--c-warn);
+  background: rgba(255, 173, 31, 0.12);
+}
+
+.pn-preview-inline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+
+/* Okno s exportem (vložený režim, kde nelze stahovat soubory) */
+.pn-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.6);
+}
+.pn-modal {
+  width: min(760px, 100%);
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--r-lg);
+  border: 1px solid var(--c-border-strong);
+  background: var(--c-surface-1);
+  box-shadow: var(--shadow-2);
+}
+.pn-modal-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--c-border);
+}
+.pn-modal-head b {
+  flex: 1;
+}
+.pn-modal-pre {
+  margin: 0;
+  padding: 14px;
+  overflow: auto;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--c-text-2);
+  user-select: text;
+}

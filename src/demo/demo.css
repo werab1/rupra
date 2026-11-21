@@ -1,0 +1,300 @@
+/* Demo: všechny tři obrazovky Rupry v jedné stránce (artefakt). Jednotný tmavý vzhled. */
+
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  background: var(--c-bg);
+  overflow: hidden;
+}
+
+.dm {
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.dm-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  padding-block: 10px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  background: var(--c-surface-1);
+  border-bottom: 1px solid var(--c-border);
+}
+.dm-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: 0.08em;
+}
+.dm-brand svg {
+  width: 22px;
+  height: 22px;
+  color: var(--c-brand);
+}
+.dm-brand em {
+  font-style: normal;
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: var(--r-sm);
+  background: rgba(255, 59, 48, 0.14);
+  color: var(--c-brand);
+}
+.dm-tabs {
+  display: inline-flex;
+  padding: 3px;
+  gap: 2px;
+  border-radius: var(--r-md);
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+}
+.dm-tabs button {
+  height: 32px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--c-text-2);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.dm-tabs button:hover {
+  color: var(--c-text);
+}
+.dm-tabs button.is-active {
+  background: var(--c-surface-3);
+  color: var(--c-text);
+  box-shadow: var(--shadow-1);
+}
+.dm-hint {
+  flex: 1;
+  min-width: 220px;
+  margin: 0;
+  font-size: 13px;
+  color: var(--c-text-3);
+}
+.dm-restart {
+  height: 32px;
+  padding: 0 12px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--c-border-strong);
+  background: transparent;
+  color: var(--c-text-2);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.dm-restart:hover {
+  color: var(--c-text);
+}
+.dm-restart.is-armed {
+  border-color: var(--c-warn);
+  color: var(--c-warn);
+}
+
+.dm-stage {
+  min-height: 0;
+  position: relative;
+}
+
+/* ── Vše vedle sebe ── */
+.dm-split {
+  height: 100%;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+}
+.dm-split > .dm-phone {
+  margin: 16px;
+  align-self: center;
+}
+.dm-split .dm-panel {
+  border-left: 1px solid var(--c-border);
+}
+
+/* ── Telefon ── */
+.dm-phone {
+  /* transform = obal pro position:fixed uvnitř zápisu */
+  transform: translateZ(0);
+  width: 390px;
+  height: min(820px, calc(100% - 32px));
+  max-height: calc(100% - 32px);
+  border-radius: 42px;
+  border: 10px solid #000;
+  box-shadow: 0 0 0 1px var(--c-border-strong), 0 24px 60px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  background: var(--c-bg);
+}
+.dm-phone-screen {
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+.dm-phone-screen::-webkit-scrollbar {
+  display: none;
+}
+.dm-phone .zp {
+  min-height: 100%;
+  max-width: none;
+  border: 0;
+}
+.dm-split .dm-phone {
+  height: calc(100% - 32px);
+}
+
+.dm-center {
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+.dm-center .dm-phone {
+  height: calc(100% - 32px);
+}
+
+.dm-plain {
+  height: 100%;
+  overflow-y: auto;
+}
+.dm-plain .zp {
+  min-height: 100%;
+}
+
+/* ── Režie ── */
+.dm-panel {
+  height: 100%;
+  overflow: auto;
+}
+.dm-panel .pn {
+  height: 100%;
+  min-height: 640px;
+}
+
+/* ── Overlay ── */
+.dm-ov {
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-block: 16px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.dm-ov-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+}
+.dm-ov-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.dm-ov-buttons button,
+.dm-ov-bg button {
+  height: 34px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--c-border-strong);
+  background: var(--c-surface-2);
+  color: var(--c-text);
+  font-size: 13px;
+  font-weight: 600;
+}
+.dm-ov-buttons button.is-on {
+  background: var(--c-onair);
+  border-color: var(--c-onair);
+  color: #fff;
+}
+.dm-ov-buttons kbd {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  padding: 0 5px;
+  border-radius: 3px;
+  border: 1px solid currentColor;
+  opacity: 0.7;
+}
+.dm-ov-bg {
+  display: inline-flex;
+  gap: 4px;
+}
+.dm-ov-bg button {
+  background: transparent;
+  color: var(--c-text-2);
+}
+.dm-ov-bg button.is-active {
+  background: var(--c-surface-3);
+  color: var(--c-text);
+}
+.dm-ov-frame {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  flex: none;
+  overflow: hidden;
+  border-radius: var(--r-md);
+  border: 1px solid var(--c-border-strong);
+}
+.dm-ov-frame.bg-pitch {
+  background:
+    radial-gradient(ellipse at 50% 120%, transparent 30%, rgba(0, 0, 0, 0.45) 100%),
+    repeating-linear-gradient(90deg, #3c7a3a 0 8.33%, #367035 8.33% 16.66%);
+}
+.dm-ov-frame.bg-checker {
+  background-color: #1b1e23;
+  background-image:
+    linear-gradient(45deg, #24282e 25%, transparent 25%),
+    linear-gradient(-45deg, #24282e 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #24282e 75%),
+    linear-gradient(-45deg, transparent 75%, #24282e 75%);
+  background-size: 24px 24px;
+  background-position: 0 0, 0 12px, 12px -12px, -12px 0;
+}
+.dm-ov-frame.bg-black {
+  background: #000;
+}
+.dm-ov-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  transform-origin: 0 0;
+}
+
+@media (max-width: 719px) {
+  .dm-hint {
+    display: none;
+  }
+  .dm-tabs {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+  }
+  .dm-tabs button {
+    flex: 1;
+  }
+  .dm-restart {
+    margin-left: auto;
+  }
+}

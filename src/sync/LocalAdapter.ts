@@ -52,9 +52,11 @@ export class LocalAdapter implements SyncAdapter {
   private connection: ConnectionInfo = { status: 'degraded', peers: { zapis: 0, panel: 0, overlay: 0 } };
   private timer: number | undefined;
 
-  constructor() {
-    this.state = load() ?? createInitialState();
-    if (!load()) save(this.state);
+  /** @param seed počáteční stav, pokud v úložišti nic není (např. ukázkový zápas v demu) */
+  constructor(seed: () => AppState = () => createInitialState()) {
+    const stored = load();
+    this.state = stored ?? seed();
+    if (!stored) save(this.state);
 
     try {
       this.channel = new BroadcastChannel(CHANNEL);

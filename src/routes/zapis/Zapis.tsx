@@ -5,6 +5,7 @@ import { activeYellowCards, displayMs, formatClock, formatShort, PERIOD_LABEL, P
 import { POINTS, SCORE_LABEL, SCORE_ORDER } from '../../domain/rules';
 import { findPlayer, matchSquad, SIDES } from '../../domain/roster';
 import type { Action, AppState, CardKind, Player, ScoreKind, Side } from '../../domain/types';
+import { useArmed } from '../../hooks/useArmed';
 import { useMatch, useNow } from '../../hooks/useMatch';
 import type { ConnectionInfo } from '../../sync';
 import { Setup } from './Setup';
@@ -309,6 +310,8 @@ function ClockControls({ state, act }: { state: AppState; act: (a: Action, t: st
             ? 'Konec zápasu'
             : 'Zápas skončil';
   const startLabel = live.period === 'pre' ? 'VÝKOP' : live.period === 'ht' ? 'START 2. POL.' : 'START';
+  const { armed, guard } = useArmed();
+  const needsConfirm = live.period === 'h1' || live.period === 'h2';
 
   return (
     <div className="zp-clock">
@@ -325,15 +328,15 @@ function ClockControls({ state, act }: { state: AppState; act: (a: Action, t: st
         {running ? 'STOP' : startLabel}
       </button>
       <button
-        className="zp-clock-next"
+        className={`zp-clock-next ${armed === 'next' ? 'is-armed' : ''}`}
         disabled={live.period === 'ft'}
         onClick={() => {
-          if (live.period === 'h2' && !confirm('Ukončit zápas?')) return;
-          if (live.period === 'h1' && !confirm('Ukončit 1. poločas?')) return;
-          act({ type: 'NEXT_HALF' }, nextLabel);
+          const run = () => act({ type: 'NEXT_HALF' }, nextLabel);
+          if (needsConfirm) guard('next', run);
+          else run();
         }}
       >
-        <Icon name="next" /> {nextLabel}
+        <Icon name="next" /> {armed === 'next' ? `Opravdu? Klepněte znovu – ${nextLabel.toLowerCase()}` : nextLabel}
       </button>
     </div>
   );

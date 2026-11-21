@@ -6,6 +6,11 @@ export * from './SyncAdapter';
 
 let instance: SyncAdapter | null = null;
 
+/** Podstrčí vlastní adaptér (demo, testy). Volat před prvním vykreslením. */
+export function setAdapter(adapter: SyncAdapter) {
+  instance = adapter;
+}
+
 /** Jediný adaptér na stránku. Volba podle .env (VITE_SYNC_ADAPTER). */
 export function getAdapter(): SyncAdapter {
   if (instance) return instance;

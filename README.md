@@ -55,6 +55,16 @@ Dev server běží s `--host`, takže se k němu připojíte i z mobilu ve stejn
 Indikátor připojení v horní liště zápisu:
 🟢 vidí další obrazovku (panel nebo overlay) · 🟠 synchronizace funguje, ale nikdo jiný není otevřený · 🔴 synchronizace nefunguje.
 
+### Ukázka v jedné stránce (artefakt)
+
+Pro rychlé předvedení jsou všechny tři obrazovky i v jedné stránce nad rozehraným ukázkovým zápasem (`demo.html`, `src/demo/`). Sestavení do jednoho HTML souboru:
+
+```bash
+node scripts/build-artifact.mjs
+```
+
+Výsledek je `dist-demo/rupra-demo.html`. V této verzi se export JSON/XML zobrazí v okně ke zkopírování, protože vložená stránka nesmí stahovat soubory.
+
 ### Automatický smoke test (volitelný)
 
 ```bash

@@ -73,7 +73,9 @@ export type ControlAction =
   | { type: 'HIDE_NOTIFICATION' }
   | { type: 'REPLAY_NOTIFICATION' }
   | { type: 'SET_SETUP'; setup: MatchSetup }
-  | { type: 'RESET_MATCH' };
+  | { type: 'RESET_MATCH' }
+  /** Nahradí celý stav (import, demo). */
+  | { type: 'REPLACE_STATE'; state: AppState };
 
 export type Action = MatchAction | ControlAction;
 

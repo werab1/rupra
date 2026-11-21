@@ -3,3 +3,4 @@ dist
 *.local
 .env
 screenshots-tmp
+dist-demo

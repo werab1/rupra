@@ -906,3 +906,11 @@
     border-right: 1px solid var(--c-border);
   }
 }
+
+/* Potvrzení druhým klepnutím */
+.zp-clock-next.is-armed,
+.zp-wide-btn.is-armed {
+  border: 2px solid var(--c-warn);
+  background: rgba(255, 173, 31, 0.14);
+  color: var(--c-warn);
+}

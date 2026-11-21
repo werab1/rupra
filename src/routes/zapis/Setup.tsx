@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { teamVars } from '../../components/color';
 import { Icon } from '../../components/Icon';
 import { VARIANTS } from '../../domain/rules';
+import { useArmed } from '../../hooks/useArmed';
 import { sampleSetup } from '../../domain/sampleData';
 import type { AppState, MatchSetup, Player, Side, Variant } from '../../domain/types';
 
@@ -18,6 +19,7 @@ export function Setup({
   onReset: () => void;
 }) {
   const [draft, setDraft] = useState<MatchSetup>(() => structuredClone(state.setup));
+  const { armed, guard } = useArmed();
   const rules = VARIANTS[draft.variant];
 
   const setTeam = (side: Side, patch: Partial<MatchSetup['home']>) =>
@@ -227,12 +229,10 @@ export function Setup({
             Načíst ukázková data
           </button>
           <button
-            className="zp-wide-btn is-danger"
-            onClick={() => {
-              if (confirm('Začít nový zápas? Skóre, čas i všechny události se vymažou.')) onReset();
-            }}
+            className={`zp-wide-btn is-danger ${armed === 'reset' ? 'is-armed' : ''}`}
+            onClick={() => guard('reset', onReset)}
           >
-            Nový zápas (vymazat skóre a události)
+            {armed === 'reset' ? 'Opravdu? Klepněte znovu – vše se vymaže' : 'Nový zápas (vymazat skóre a události)'}
           </button>
         </section>
       </main>
