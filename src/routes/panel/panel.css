@@ -1,0 +1,721 @@
+/* ═══════════════════════════ /panel – režie (control room) ═══════════════════════════ */
+
+.pn {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 60px 1fr;
+  background: var(--c-bg);
+  font-size: 14px;
+  min-width: 1180px;
+}
+
+.pn-h {
+  margin: 0 0 10px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-text-3);
+}
+.pn-h-count {
+  padding: 1px 6px;
+  border-radius: var(--r-pill);
+  background: var(--c-surface-3);
+  color: var(--c-text-2);
+  letter-spacing: 0;
+}
+.pn-h-meta {
+  margin-left: auto;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  font-weight: 500;
+}
+.pn-empty {
+  margin: 0;
+  color: var(--c-text-3);
+  font-size: 13px;
+}
+
+kbd {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--c-border-strong);
+  border-bottom-width: 2px;
+  background: var(--c-surface-2);
+  color: var(--c-text-2);
+}
+
+/* ───────────── Tlačítka ───────────── */
+
+.pn-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--c-border-strong);
+  background: var(--c-surface-3);
+  color: var(--c-text);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background var(--dur-fast), border-color var(--dur-fast);
+}
+.pn-btn:hover {
+  background: var(--c-surface-4);
+}
+.pn-btn-ghost {
+  background: transparent;
+  border-color: var(--c-border);
+  color: var(--c-text-2);
+}
+.pn-btn-ghost:hover {
+  color: var(--c-text);
+  background: var(--c-surface-2);
+}
+.pn-btn-sm {
+  height: 28px;
+  padding: 0 10px;
+}
+
+/* ───────────── Hlavička ───────────── */
+
+.pn-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--c-border);
+  background: var(--c-surface-1);
+}
+.pn-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pn-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: 0.08em;
+}
+.pn-logo svg {
+  width: 22px;
+  height: 22px;
+  color: var(--c-brand);
+}
+.pn-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  padding: 2px 6px;
+  border-radius: var(--r-sm);
+  background: rgba(255, 59, 48, 0.14);
+  color: var(--c-brand);
+}
+.pn-match {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding-left: 20px;
+  border-left: 1px solid var(--c-border);
+}
+.pn-match-teams {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  white-space: nowrap;
+}
+.pn-match-teams i {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+.pn-match-vs {
+  color: var(--c-text-3);
+  font-weight: 500;
+}
+.pn-match-meta {
+  font-size: 12px;
+  color: var(--c-text-3);
+  white-space: nowrap;
+}
+.pn-onair {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 28px;
+  padding: 0 12px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--c-border);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--c-text-3);
+}
+.pn-onair i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c-text-3);
+}
+.pn-onair.is-on {
+  color: #fff;
+  background: var(--c-onair);
+  border-color: var(--c-onair);
+  box-shadow: 0 0 18px var(--c-onair-glow);
+}
+.pn-onair.is-on i {
+  background: #fff;
+  animation: pulse 1.2s infinite;
+}
+.pn-conn {
+  display: flex;
+  gap: 14px;
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--c-text-2);
+}
+.pn-conn-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.pn-conn-item b {
+  color: var(--c-text-3);
+  font-weight: 600;
+}
+.pn-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* ───────────── Hlavní mřížka ───────────── */
+
+.pn-main {
+  display: grid;
+  grid-template-columns: minmax(300px, 340px) minmax(0, 1fr) minmax(400px, 480px);
+  min-height: 0;
+}
+.pn-left,
+.pn-right {
+  min-height: 0;
+  overflow-y: auto;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.pn-left {
+  border-right: 1px solid var(--c-border);
+}
+.pn-right {
+  border-left: 1px solid var(--c-border);
+  background: var(--c-surface-1);
+}
+.pn-center {
+  min-width: 0;
+  min-height: 0;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow-y: auto;
+}
+
+.pn-block {
+  background: var(--c-surface-1);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  padding: 14px;
+}
+.pn-block-grow {
+  flex: 1;
+}
+
+/* ───────────── Živá data ───────────── */
+
+.pn-score {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.pn-score-team {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: 'short num' 'name name' 'tries tries';
+  align-items: center;
+  padding: 10px 12px 10px 16px;
+  border-radius: var(--r-md);
+  background: var(--c-surface-2);
+  overflow: hidden;
+}
+.pn-score-team::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background: var(--tc);
+}
+.pn-score-short {
+  grid-area: short;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: 0.05em;
+}
+.pn-score-num {
+  grid-area: num;
+  justify-self: end;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 48px;
+  line-height: 1;
+}
+.pn-score-name {
+  grid-area: name;
+  font-size: 12px;
+  color: var(--c-text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pn-score-tries {
+  grid-area: tries;
+  font-size: 11px;
+  color: var(--c-text-3);
+}
+.pn-clock {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: var(--r-md);
+  background: var(--c-surface-2);
+}
+.pn-clock-time {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 44px;
+  line-height: 1;
+  color: var(--c-text-2);
+}
+.pn-clock-time.is-running {
+  color: var(--c-text);
+}
+.pn-clock-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+  color: var(--c-text-2);
+}
+.pn-run {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  color: var(--c-text-3);
+}
+.pn-run i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.pn-run.is-running {
+  color: var(--c-ok);
+}
+.pn-ht {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--c-text-3);
+}
+
+.pn-cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.pn-cards li {
+  display: grid;
+  grid-template-columns: 14px 36px 1fr auto;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: var(--r-md);
+  background: var(--c-surface-2);
+  font-size: 13px;
+}
+.pn-cards .card-chip {
+  font-size: 15px;
+}
+.pn-cards-team {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 15px;
+}
+.pn-cards-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pn-cards-time {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--c-card-yellow);
+}
+.pn-cards li:has(.red) .pn-cards-time {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--c-text-3);
+}
+
+.pn-events {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.pn-events li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 34px 18px 1fr auto;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 6px 8px 10px;
+  border-bottom: 1px solid var(--c-border);
+  animation: ev-in 300ms var(--ease-out);
+}
+.pn-events li.has-team::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--tc);
+}
+@keyframes ev-in {
+  from { opacity: 0; transform: translateY(-4px); }
+}
+.pn-ev-min {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--c-text-2);
+}
+.pn-ev-ico {
+  width: 16px;
+  height: 16px;
+  color: var(--c-text-2);
+}
+.pn-ev-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  font-size: 13px;
+}
+.pn-ev-text span {
+  font-size: 12px;
+  color: var(--c-text-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pn-ev-team {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--c-text-2);
+}
+
+/* ───────────── Náhled ───────────── */
+
+.pn-preview {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--r-md);
+  border: 1px solid var(--c-border-strong);
+  /* šachovnice = průhlednost */
+  background-color: #1b1e23;
+  background-image:
+    linear-gradient(45deg, #24282e 25%, transparent 25%),
+    linear-gradient(-45deg, #24282e 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #24282e 75%),
+    linear-gradient(-45deg, transparent 75%, #24282e 75%);
+  background-size: 24px 24px;
+  background-position: 0 0, 0 12px, 12px -12px, -12px 0;
+}
+.pn-preview iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0;
+  transform-origin: 0 0;
+  pointer-events: none;
+  background: transparent;
+  /* Musí se shodovat s color-scheme overlaye, jinak iframe dostane neprůhledné pozadí. */
+  color-scheme: light;
+}
+.pn-safe {
+  position: absolute;
+  inset: 5%;
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+}
+
+/* ───────────── Auto oznámení ───────────── */
+
+.pn-auto {
+  display: flex;
+  gap: 20px;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+.pn-auto-toggles {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.pn-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 600;
+  color: var(--c-text-2);
+  cursor: pointer;
+  user-select: none;
+}
+.pn-switch input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.pn-switch-track {
+  width: 38px;
+  height: 22px;
+  padding: 2px;
+  border-radius: var(--r-pill);
+  background: var(--c-surface-4);
+  transition: background var(--dur-ui);
+}
+.pn-switch-thumb {
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform var(--dur-ui) var(--ease-out);
+}
+.pn-switch.is-on {
+  color: var(--c-text);
+}
+.pn-switch.is-on .pn-switch-track {
+  background: var(--c-ok);
+}
+.pn-switch.is-on .pn-switch-thumb {
+  transform: translateX(16px);
+}
+.pn-switch:has(input:focus-visible) .pn-switch-track {
+  outline: 2px solid var(--c-focus);
+  outline-offset: 2px;
+}
+.pn-notif {
+  flex: 1;
+  min-width: 280px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--r-md);
+  border: 1px dashed var(--c-border-strong);
+  color: var(--c-text-3);
+  font-size: 13px;
+}
+.pn-notif.is-on {
+  border: 1px solid var(--c-onair);
+  background: rgba(255, 42, 42, 0.08);
+  color: var(--c-text);
+}
+.pn-notif-tag {
+  padding: 3px 8px;
+  border-radius: var(--r-sm);
+  background: var(--c-onair);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+.pn-notif-text {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ───────────── Dlaždice ───────────── */
+
+.pn-right-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.pn-right-head .pn-h {
+  margin: 0;
+}
+.pn-tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.pn-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  border-radius: var(--r-lg);
+  background: var(--c-surface-2);
+  border: 1px solid var(--c-border);
+  transition: border-color var(--dur-ui), box-shadow var(--dur-ui), background var(--dur-ui);
+}
+.pn-tile:has(.pn-picker),
+.pn-tile:has(.pn-select) {
+  grid-column: 1 / -1;
+}
+.pn-tile.is-on {
+  border-color: var(--c-onair);
+  background: linear-gradient(180deg, rgba(255, 42, 42, 0.12), rgba(255, 42, 42, 0.03));
+  box-shadow: 0 0 0 1px var(--c-onair), 0 0 24px rgba(255, 42, 42, 0.18);
+}
+.pn-tile-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-height: 40px;
+}
+.pn-tile-key {
+  flex: none;
+  margin-top: 1px;
+}
+.pn-tile-title {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.pn-tile-title b {
+  font-size: 14px;
+}
+.pn-tile-title span {
+  font-size: 12px;
+  color: var(--c-text-3);
+}
+.pn-tile-live {
+  flex: none;
+  padding: 2px 7px;
+  border-radius: var(--r-sm);
+  background: var(--c-onair);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  animation: pulse 1.6s infinite;
+}
+.pn-tile-btn {
+  height: 48px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--c-border-strong);
+  background: var(--c-surface-3);
+  color: var(--c-text);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  transition: background var(--dur-fast), transform var(--dur-fast);
+}
+.pn-tile-btn:hover:not(:disabled) {
+  background: var(--c-surface-4);
+}
+.pn-tile-btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+.pn-tile-btn.is-on {
+  background: var(--c-onair);
+  border-color: var(--c-onair);
+  color: #fff;
+}
+.pn-tile-btn.is-on:hover {
+  background: #ff4747;
+}
+.pn-tile-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pn-picker {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px;
+}
+.pn-seg {
+  display: inline-flex;
+  border-radius: var(--r-md);
+  border: 1px solid var(--c-border-strong);
+  overflow: hidden;
+}
+.pn-seg button {
+  height: 36px;
+  padding: 0 12px;
+  border: 0;
+  background: var(--c-surface-3);
+  color: var(--c-text-2);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+}
+.pn-seg button + button {
+  border-left: 1px solid var(--c-border-strong);
+}
+.pn-seg button.is-active {
+  background: var(--tc);
+  color: var(--tc-text);
+}
+.pn-select {
+  height: 36px;
+  min-width: 0;
+  width: 100%;
+  padding: 0 10px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--c-border-strong);
+  background: var(--c-surface-3);
+  font-size: 13px;
+}

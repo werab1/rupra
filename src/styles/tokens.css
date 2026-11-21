@@ -1,0 +1,204 @@
+/* ═══════════════════════════════════════════════════════════════════
+   RUPRA – designový systém
+   Jeden zdroj pravdy pro barvy, typografii, rádiusy, stíny a pohyb.
+   Sdílí ho /zapis (mobil), /panel (režie) i /overlay (vysílání).
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── Plochy (grafitová škála) ── */
+  --c-bg: #0a0c0f;
+  --c-surface-1: #111419;
+  --c-surface-2: #171b21;
+  --c-surface-3: #1f242c;
+  --c-surface-4: #2a303a;
+  --c-border: #252b34;
+  --c-border-strong: #353d49;
+
+  /* ── Text ── */
+  --c-text: #f3f5f8;
+  --c-text-2: #aab2bf;
+  --c-text-3: #6d7684;
+  --c-text-inverse: #0a0c0f;
+
+  /* ── Značka a stavy ── */
+  --c-brand: #ff3b30;
+  --c-onair: #ff2a2a;
+  --c-onair-glow: rgba(255, 42, 42, 0.45);
+  --c-ok: #2bd46a;
+  --c-warn: #ffad1f;
+  --c-danger: #ff4d4f;
+  --c-card-yellow: #ffd60a;
+  --c-card-red: #e8262c;
+  --c-focus: #5aa9ff;
+
+  /* ── Barvy týmů (přepisují se inline podle nastavení zápasu) ── */
+  --team-home: #e0312b;
+  --team-away: #13a8c4;
+
+  /* ── Overlay (vysílání) ── */
+  --ov-panel: rgba(9, 10, 13, 0.9);
+  --ov-panel-2: rgba(20, 22, 28, 0.92);
+  --ov-panel-3: rgba(32, 35, 43, 0.94);
+  --ov-line: rgba(255, 255, 255, 0.08);
+  --ov-text: #ffffff;
+  --ov-text-2: rgba(255, 255, 255, 0.68);
+  --ov-safe-x: 96px;   /* 5 % z 1920 */
+  --ov-safe-y: 54px;   /* 5 % z 1080 */
+  --ov-cut: 22px;      /* šikmý řez hran panelů */
+
+  /* ── Typografie ── */
+  --font-display: 'Barlow Condensed', 'Oswald', 'Arial Narrow', system-ui, sans-serif;
+  --font-ui: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --fw-display: 700;
+  --fw-display-heavy: 800;
+  --tracking-caps: 0.04em;
+
+  /* ── Rádiusy ── */
+  --r-xs: 2px;
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-xl: 18px;
+  --r-pill: 999px;
+
+  /* ── Stíny ── */
+  --shadow-1: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --shadow-ov: 0 12px 40px rgba(0, 0, 0, 0.35);
+
+  /* ── Pohyb ── */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in: cubic-bezier(0.6, 0, 0.8, 0.2);
+  --dur-fast: 140ms;
+  --dur-ui: 220ms;
+  --dur-in: 550ms;
+  --dur-out: 420ms;
+
+  /* ── Rozměry ovládání ── */
+  --tap-min: 56px;
+  --tap-lg: 72px;
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--font-ui);
+  font-size: 15px;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Overlay musí být úplně průhledný a bez posuvníků. */
+html[data-route='overlay'],
+html[data-route='overlay'] body {
+  background: transparent !important;
+  /* Světlé schéma = prohlížeč (CEF ve vMixu, iframe v režii) nepodkládá stránku tmavým plátnem. */
+  color-scheme: light;
+  overflow: hidden;
+  width: 1920px;
+  height: 1080px;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--c-focus);
+  outline-offset: 2px;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: var(--fw-display);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Sdílené ikony */
+.ico {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  vertical-align: -0.125em;
+  flex: none;
+}
+
+/* Karta (žlutá/červená) jako malý obdélník */
+.card-chip {
+  display: inline-block;
+  width: 0.62em;
+  height: 0.86em;
+  border-radius: 2px;
+  transform: rotate(8deg);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
+}
+.card-chip.yellow { background: var(--c-card-yellow); }
+.card-chip.red { background: var(--c-card-red); }
+
+/* Indikátor připojení */
+.conn-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  flex: none;
+}
+.conn-dot.online { background: var(--c-ok); box-shadow: 0 0 0 3px rgba(43, 212, 106, 0.2); }
+.conn-dot.degraded { background: var(--c-warn); box-shadow: 0 0 0 3px rgba(255, 173, 31, 0.2); }
+.conn-dot.offline { background: var(--c-danger); box-shadow: 0 0 0 3px rgba(255, 77, 79, 0.2); animation: pulse 1.2s infinite; }
+
+@keyframes pulse {
+  50% { opacity: 0.35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-route='overlay']) *,
+  html:not([data-route='overlay']) *::before,
+  html:not([data-route='overlay']) *::after {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+  }
+}

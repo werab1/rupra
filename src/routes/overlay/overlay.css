@@ -1,0 +1,844 @@
+/* ═══════════════════════════ /overlay – výstup do vysílání ═══════════════════════════
+   1920×1080, průhledné pozadí. Animuje se výhradně transform a opacity. */
+
+.ov-root {
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  color: var(--ov-text);
+  font-family: var(--font-ui);
+  background: transparent;
+  --u: 1px;
+}
+
+/* ───────────── Obecné animace (Presence) ───────────── */
+
+.fx {
+  opacity: 0;
+  transition:
+    opacity var(--dur-out) var(--ease-out),
+    transform var(--dur-out) var(--ease-out);
+  will-change: transform, opacity;
+}
+.fx.is-in {
+  opacity: 1;
+  transition-duration: var(--dur-in);
+}
+
+/* Maska: obal ořízne obsah, vnitřek vyjede zpoza hrany */
+.mask {
+  overflow: hidden;
+}
+
+/* ───────────── Levý horní roh ───────────── */
+
+.ov-topleft {
+  position: absolute;
+  left: var(--ov-safe-x);
+  top: var(--ov-safe-y);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+/* ───────────── Scorebug ───────────── */
+
+.ov-sb-wrap {
+  transform: translateX(-36px);
+}
+.ov-sb-wrap.is-in {
+  transform: none;
+}
+
+.sb {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.sb-main {
+  display: flex;
+  height: 64px;
+  align-items: stretch;
+}
+
+.sb-team {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 124px;
+  background: var(--ov-panel);
+  padding-left: 30px;
+}
+.sb-home {
+  clip-path: polygon(14px 0, 100% 0, 100% 100%, 0 100%);
+}
+.sb-team-r {
+  display: flex;
+  align-items: stretch;
+}
+.sb-team-r .sb-team {
+  flex-direction: row-reverse;
+  padding-left: 0;
+  padding-right: 22px;
+  justify-content: flex-start;
+}
+
+.sb-bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  background: var(--tc);
+}
+.sb-home .sb-bar {
+  left: 0;
+  width: 24px;
+  clip-path: polygon(14px 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+}
+.sb-away .sb-bar {
+  right: 0;
+  width: 10px;
+}
+
+.sb-abbr {
+  font-family: var(--font-display);
+  font-weight: var(--fw-display-heavy);
+  font-size: 36px;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.sb-away .sb-abbr {
+  margin-right: 0;
+}
+
+.sb-score {
+  position: relative;
+  width: 80px;
+  display: grid;
+  place-items: center;
+  background: var(--ov-panel-3);
+  font-family: var(--font-display);
+  font-weight: var(--fw-display-heavy);
+  font-size: 50px;
+  line-height: 1;
+  overflow: hidden;
+}
+.sb-score + .sb-score {
+  border-left: 2px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Flash při změně skóre */
+.sb-flash {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  opacity: 0;
+  animation: sb-flash 900ms var(--ease-out);
+  pointer-events: none;
+}
+@keyframes sb-flash {
+  0% { opacity: 0.85; }
+  100% { opacity: 0; }
+}
+
+/* Animované číslice */
+.anum {
+  display: inline-grid;
+  position: relative;
+  z-index: 1;
+}
+.anum > span {
+  grid-area: 1 / 1;
+}
+.anum-in {
+  animation: anum-in 600ms var(--ease-out) both;
+}
+.anum-out {
+  animation: anum-out 600ms var(--ease-out) both;
+}
+.anum-down .anum-in { animation-name: anum-in-down; }
+.anum-down .anum-out { animation-name: anum-out-down; }
+@keyframes anum-in { from { transform: translateY(70%); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes anum-out { from { transform: none; opacity: 1; } to { transform: translateY(-70%); opacity: 0; } }
+@keyframes anum-in-down { from { transform: translateY(-70%); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes anum-out-down { from { transform: none; opacity: 1; } to { transform: translateY(70%); opacity: 0; } }
+
+.sb-clock {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: 6px;
+  padding: 0 40px 0 20px;
+  min-width: 196px;
+  background: var(--ov-panel);
+  clip-path: polygon(0 0, 100% 0, calc(100% - var(--ov-cut)) 100%, 0 100%);
+  transform: translateX(-24px);
+  opacity: 0;
+  transition:
+    transform var(--dur-out) var(--ease-out),
+    opacity var(--dur-out) var(--ease-out);
+}
+.is-in .sb-clock {
+  transform: none;
+  opacity: 1;
+  transition-duration: var(--dur-in);
+  transition-delay: 120ms;
+}
+.sb-time {
+  font-family: var(--font-display);
+  font-weight: var(--fw-display);
+  font-size: 38px;
+  line-height: 1;
+  min-width: 88px;
+}
+.sb-time-label {
+  font-size: 30px;
+  letter-spacing: 0.06em;
+}
+.sb-period {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--ov-text-2);
+  text-transform: uppercase;
+  padding-top: 2px;
+}
+.sb-clock:not(.is-running) .sb-time:not(.sb-time-label) {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+/* Karty pod týmy */
+.sb-cards-row {
+  display: grid;
+  grid-template-columns: 204px 204px;
+}
+.sb-cards {
+  display: flex;
+  gap: 6px;
+  padding-top: 6px;
+  min-height: 0;
+}
+.sb-cards:empty {
+  padding: 0;
+}
+.sb-cards-away {
+  justify-content: flex-end;
+}
+.sb-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 30px;
+  padding: 0 10px 0 9px;
+  background: var(--ov-panel);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 21px;
+  line-height: 1;
+  animation: chip-in 500ms var(--ease-out) both;
+}
+.sb-card .card-chip {
+  font-size: 20px;
+}
+.sb-card b {
+  font-weight: 800;
+}
+.sb-card b + span {
+  color: var(--ov-text-2);
+}
+@keyframes chip-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ───────────── Oznámení ───────────── */
+
+.ov-notif {
+  overflow: hidden;
+  transform: none;
+}
+.ov-notif .nt {
+  transform: translateX(-102%);
+  transition: transform var(--dur-out) var(--ease-out);
+}
+.ov-notif.is-in .nt {
+  transform: none;
+  transition-duration: var(--dur-in);
+}
+
+.nt {
+  display: flex;
+  align-items: stretch;
+  min-width: 520px;
+  max-width: 820px;
+  background: var(--ov-panel);
+  clip-path: polygon(0 0, 100% 0, calc(100% - var(--ov-cut)) 100%, 0 100%);
+}
+.nt-icon {
+  display: grid;
+  place-items: center;
+  width: 96px;
+  background: var(--tc, var(--c-brand));
+  color: var(--tc-text, #fff);
+  flex: none;
+}
+.nt-icon.is-yellow,
+.nt-icon.is-red {
+  background: var(--ov-panel-3);
+}
+.nt-ico {
+  width: 54px;
+  height: 54px;
+}
+.nt-body {
+  padding: 14px 52px 16px 24px;
+  border-left: 4px solid var(--tc, var(--c-brand));
+}
+.nt-title {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  font-family: var(--font-display);
+  font-weight: var(--fw-display-heavy);
+  font-size: 46px;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.nt-team {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ov-text-2);
+  letter-spacing: 0.08em;
+}
+.nt-line {
+  margin-top: 6px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 1.12;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.nt-sub {
+  margin-top: 4px;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ov-text-2);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ───────────── Centrované grafiky ───────────── */
+
+.ov-center {
+  position: absolute;
+  inset: var(--ov-safe-y) var(--ov-safe-x);
+  display: grid;
+  place-items: center;
+  transform: translateY(24px);
+  pointer-events: none;
+}
+.ov-center.is-in {
+  transform: none;
+}
+
+/* Úvodní karta */
+.in {
+  width: 1440px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.in-top {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+.in-comp {
+  padding: 10px 34px;
+  background: var(--c-brand);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  clip-path: polygon(14px 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+}
+.in-row {
+  display: grid;
+  grid-template-columns: 1fr 150px 1fr;
+  align-items: stretch;
+}
+.in-team {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 36px 40px;
+  min-height: 260px;
+  background: var(--ov-panel);
+  transition: transform var(--dur-out) var(--ease-out), opacity var(--dur-out) var(--ease-out);
+  opacity: 0;
+}
+.in-home {
+  transform: translateX(-80px);
+  clip-path: polygon(var(--ov-cut) 0, 100% 0, 100% 100%, 0 100%);
+  border-right: 0;
+}
+.in-away {
+  flex-direction: row-reverse;
+  text-align: right;
+  transform: translateX(80px);
+  clip-path: polygon(0 0, 100% 0, calc(100% - var(--ov-cut)) 100%, 0 100%);
+}
+.is-in .in-team {
+  transform: none;
+  opacity: 1;
+  transition-duration: var(--dur-in);
+  transition-delay: 80ms;
+}
+.in-badge {
+  flex: none;
+  width: 176px;
+  height: 176px;
+  display: grid;
+  place-items: center;
+  background: var(--tc);
+  color: var(--tc-text);
+  clip-path: polygon(16px 0, 100% 0, calc(100% - 16px) 100%, 0 100%);
+}
+.in-badge span {
+  font-family: var(--font-display);
+  font-weight: var(--fw-display-heavy);
+  font-size: 74px;
+  letter-spacing: 0.04em;
+}
+.in-name {
+  font-family: var(--font-display);
+  font-weight: var(--fw-display-heavy);
+  font-size: 58px;
+  line-height: 0.98;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.in-vs {
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: var(--fw-display-heavy);
+  font-size: 64px;
+  color: #fff;
+  background: var(--ov-panel-3);
+  opacity: 0;
+  transform: scale(0.85);
+  transition: transform var(--dur-out) var(--ease-out), opacity var(--dur-out) var(--ease-out);
+}
+.is-in .in-vs {
+  opacity: 1;
+  transform: none;
+  transition-duration: var(--dur-in);
+  transition-delay: 220ms;
+}
+.in-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  margin: 0 auto;
+  padding: 14px 40px;
+  background: var(--ov-panel-2);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ov-text-2);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 14px 100%);
+}
+.in-bottom i,
+.lt-sub i {
+  width: 6px;
+  height: 6px;
+  background: var(--c-brand);
+  transform: rotate(45deg);
+}
+
+/* Soupiska – panel přes 2/3 výšky (720 px) */
+.ro {
+  width: 1240px;
+  height: 720px;
+  display: flex;
+  flex-direction: column;
+  background: var(--ov-panel);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--ov-cut)), calc(100% - var(--ov-cut)) 100%, 0 100%);
+}
+.ro-head {
+  display: flex;
+  align-items: stretch;
+  height: 104px;
+  background: var(--ov-panel-3);
+  border-bottom: 4px solid var(--tc);
+}
+.ro-badge {
+  width: 140px;
+  display: grid;
+  place-items: center;
+  background: var(--tc);
+  color: var(--tc-text);
+  font-family: var(--font-display);
+  font-weight: var(--fw-display-heavy);
+  font-size: 54px;
+  letter-spacing: 0.04em;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 18px) 100%, 0 100%);
+}
+.ro-title {
+  padding: 8px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+.ro-team {
+  flex: none;
+  font-family: var(--font-display);
+  font-weight: var(--fw-display-heavy);
+  font-size: 50px;
+  line-height: 1.08;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ro-label {
+  flex: none;
+  margin-top: 2px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--ov-text-2);
+  text-transform: uppercase;
+}
+.ro-body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1.45fr 1fr;
+  gap: 36px;
+  padding: 18px 36px 26px;
+  min-height: 0;
+}
+.ro-col-bench {
+  border-left: 1px solid var(--ov-line);
+  padding-left: 36px;
+}
+.ro-col-h {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ov-text-2);
+  margin-bottom: 8px;
+}
+.ro-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.ro-row {
+  display: grid;
+  grid-template-columns: 46px 1fr auto;
+  align-items: center;
+  gap: 14px;
+  height: 36px;
+  border-bottom: 1px solid var(--ov-line);
+  opacity: 0;
+  transform: translateX(-16px);
+  transition: transform 450ms var(--ease-out), opacity 450ms var(--ease-out);
+}
+.is-in .ro-row {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(var(--i) * 22ms + 180ms);
+}
+.ro-num {
+  height: 28px;
+  line-height: 1;
+  padding-top: 1px;
+  display: grid;
+  place-items: center;
+  background: var(--tc);
+  color: var(--tc-text);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 22px;
+}
+.ro-name {
+  font-family: var(--font-display);
+  font-size: 25px;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ro-first {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.78);
+}
+.ro-name b {
+  font-weight: 800;
+}
+.ro-pos {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ov-text-2);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ───────────── Spodní titulek ───────────── */
+
+.ov-lower {
+  position: absolute;
+  left: var(--ov-safe-x);
+  bottom: var(--ov-safe-y);
+  overflow: hidden;
+}
+.ov-lower .lt {
+  transform: translateX(-102%);
+  transition: transform var(--dur-out) var(--ease-out);
+}
+.ov-lower.is-in .lt {
+  transform: none;
+  transition-duration: var(--dur-in);
+}
+
+.lt {
+  display: flex;
+  align-items: stretch;
+  height: 120px;
+  min-width: 720px;
+  max-width: 1200px;
+  background: var(--ov-panel);
+  clip-path: polygon(0 0, 100% 0, calc(100% - var(--ov-cut)) 100%, 0 100%);
+}
+.lt-num {
+  flex: none;
+  padding-top: 4px;
+  width: 120px;
+  display: grid;
+  place-items: center;
+  background: var(--tc);
+  color: var(--tc-text);
+  font-family: var(--font-display);
+  font-weight: var(--fw-display-heavy);
+  font-size: 72px;
+  line-height: 1;
+}
+.lt-official {
+  --tc: var(--c-brand);
+  --tc-text: #fff;
+}
+.lt-whistle-ico {
+  width: 60px;
+  height: 60px;
+}
+.lt-body {
+  flex: 1;
+  padding: 10px 64px 12px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-top: 4px solid var(--tc);
+  min-width: 0;
+}
+.lt-name {
+  flex: none;
+  font-family: var(--font-display);
+  font-weight: var(--fw-display-heavy);
+  font-size: 58px;
+  line-height: 1.08;
+  text-transform: uppercase;
+  letter-spacing: 0.015em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lt-sub {
+  flex: none;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ov-text-2);
+  white-space: nowrap;
+}
+
+/* ───────────── Poločas / konečné skóre ───────────── */
+
+.ss {
+  width: 1360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ss-label {
+  padding: 10px 40px;
+  background: var(--c-brand);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 30px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  clip-path: polygon(14px 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+  margin-bottom: 16px;
+}
+.ss-fulltime .ss-label {
+  background: #fff;
+  color: var(--c-text-inverse);
+}
+.ss-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 340px 1fr;
+  background: var(--ov-panel);
+  clip-path: polygon(var(--ov-cut) 0, 100% 0, calc(100% - var(--ov-cut)) 100%, 0 100%);
+}
+.ss-team {
+  padding: 28px 40px 30px 48px;
+  min-width: 0;
+  border-top: 6px solid var(--tc);
+  opacity: 0;
+  transition: transform var(--dur-out) var(--ease-out), opacity var(--dur-out) var(--ease-out);
+}
+.ss-home { transform: translateX(-40px); }
+.ss-away { transform: translateX(40px); padding: 28px 48px 30px 40px; }
+.is-in .ss-team {
+  opacity: 1;
+  transform: none;
+  transition-duration: var(--dur-in);
+  transition-delay: 120ms;
+}
+.ss-head {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.ss-away .ss-head {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+.ss-badge {
+  flex: none;
+  line-height: 1;
+  width: 84px;
+  height: 84px;
+  display: grid;
+  place-items: center;
+  background: var(--tc);
+  color: var(--tc-text);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 36px;
+}
+.ss-name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 1.1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.ss-scorers {
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 19px;
+  font-weight: 600;
+  min-height: 160px;
+}
+.ss-away .ss-scorers {
+  align-items: flex-end;
+}
+.ss-scorers li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ss-away .ss-scorers li {
+  flex-direction: row-reverse;
+}
+.ss-ico {
+  width: 20px;
+  height: 20px;
+  color: var(--ov-text-2);
+}
+.ss-tag {
+  min-width: 28px;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-align: center;
+  padding: 2px 4px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--ov-text-2);
+}
+.ss-min {
+  color: var(--ov-text-2);
+}
+.ss-empty,
+.ss-more {
+  color: var(--ov-text-2);
+}
+.ss-score {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  background: var(--ov-panel-3);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 128px;
+  line-height: 1;
+}
+.ss-score i {
+  width: 26px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.5);
+}
+.is-winner .ss-name::after {
+  content: '';
+}
+.ss-foot {
+  margin-top: 0;
+  padding: 12px 36px;
+  background: var(--ov-panel-2);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ov-text-2);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 14px 100%);
+}

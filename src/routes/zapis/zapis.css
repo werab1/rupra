@@ -1,0 +1,908 @@
+/* ═══════════════════════════ /zapis – mobil na stadionu ═══════════════════════════
+   Mobile-first, tmavý režim, ovládání palcem, tlačítka ≥ 56 px, velké kontrastní písmo. */
+
+.zp {
+  min-height: 100dvh;
+  background: var(--c-bg);
+  font-size: 16px;
+  max-width: 640px;
+  margin: 0 auto;
+  padding-bottom: calc(108px + env(safe-area-inset-bottom));
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ───────────── Horní lišta ───────────── */
+
+.zp-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr 48px;
+  align-items: stretch;
+  height: 76px;
+  padding-top: env(safe-area-inset-top);
+  background: var(--c-surface-1);
+  border-bottom: 1px solid var(--c-border);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+}
+.zp-bar-team {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 0 12px 0 16px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--tc) 38%, transparent), transparent);
+}
+.zp-bar-team::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  background: var(--tc);
+}
+.zp-bar-team.is-away {
+  padding: 0 16px 0 12px;
+  background: linear-gradient(270deg, color-mix(in srgb, var(--tc) 38%, transparent), transparent);
+}
+.zp-bar-team.is-away::before {
+  left: auto;
+  right: 0;
+}
+.zp-bar-short {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: 0.05em;
+}
+.zp-bar-score {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 48px;
+  line-height: 1;
+}
+.zp-bar-mid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  border-left: 1px solid var(--c-border);
+  border-right: 1px solid var(--c-border);
+}
+.zp-bar-time {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 1;
+  color: var(--c-text-2);
+}
+.zp-bar-time.is-running {
+  color: #fff;
+}
+.zp-bar-period {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--c-text-2);
+}
+.zp-bar-period .conn-dot {
+  width: 9px;
+  height: 9px;
+}
+.zp-bar-gear {
+  border: 0;
+  border-left: 1px solid var(--c-border);
+  background: transparent;
+  color: var(--c-text-2);
+  display: grid;
+  place-items: center;
+}
+.zp-bar-gear .ico {
+  width: 24px;
+  height: 24px;
+}
+
+/* ───────────── Toast ───────────── */
+
+.zp-toast {
+  position: fixed;
+  z-index: 40;
+  left: 50%;
+  top: calc(86px + env(safe-area-inset-top));
+  transform: translateX(-50%);
+  max-width: calc(100% - 24px);
+  padding: 12px 18px;
+  border-radius: var(--r-md);
+  background: #f3f5f8;
+  color: var(--c-text-inverse);
+  font-weight: 700;
+  font-size: 15px;
+  box-shadow: var(--shadow-2);
+  border-left: 6px solid var(--c-ok);
+  animation: toast-in 260ms var(--ease-out);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.zp-toast.is-warn {
+  border-left-color: var(--c-warn);
+}
+.zp-toast.is-undo {
+  border-left-color: var(--c-focus);
+}
+@keyframes toast-in {
+  from { opacity: 0; transform: translate(-50%, -10px); }
+}
+
+/* ───────────── Sekce ───────────── */
+
+.zp-main {
+  padding: 12px 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.zp-sec {
+  background: var(--c-surface-1);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  padding: 12px;
+}
+.zp-sec-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.zp-sec-head h2,
+.zp-form-h {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-text-2);
+}
+.zp-sec-meta {
+  font-size: 13px;
+  color: var(--c-text-3);
+  font-weight: 600;
+}
+.zp-chip {
+  height: 36px;
+  padding: 0 12px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--c-border-strong);
+  background: transparent;
+  color: var(--c-text-2);
+  font-size: 13px;
+  font-weight: 700;
+}
+.zp-chip.is-on {
+  background: var(--c-surface-3);
+  color: var(--c-text);
+}
+.zp-empty {
+  margin: 4px 0;
+  color: var(--c-text-3);
+  font-size: 15px;
+}
+
+/* ───────────── Bodování ───────────── */
+
+.zp-score-grid,
+.zp-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.zp-score-col,
+.zp-actions-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.zp-col-head {
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-sm);
+  background: var(--tc);
+  color: var(--tc-text);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: 0.08em;
+}
+.zp-score-btn {
+  min-height: var(--tap-min);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+  border-radius: var(--r-md);
+  border: 2px solid color-mix(in srgb, var(--tc) 70%, transparent);
+  background: color-mix(in srgb, var(--tc) 22%, var(--c-surface-2));
+  color: #fff;
+  text-align: left;
+  transition: transform var(--dur-fast), background var(--dur-fast);
+}
+.zp-score-btn.is-primary {
+  min-height: var(--tap-lg);
+  background: var(--tc);
+  color: var(--tc-text);
+  border-color: var(--tc);
+}
+.zp-score-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+.zp-score-btn:disabled {
+  opacity: 0.35;
+}
+.zp-score-pts {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 28px;
+  line-height: 1;
+  min-width: 34px;
+}
+.zp-score-btn.is-primary .zp-score-pts {
+  font-size: 36px;
+}
+.zp-score-lbl {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.15;
+}
+
+/* ───────────── Čas ───────────── */
+
+.zp-clock {
+  display: grid;
+  gap: 10px;
+}
+.zp-clock-main {
+  height: 84px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  border-radius: var(--r-lg);
+  border: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 38px;
+  letter-spacing: 0.08em;
+  transition: transform var(--dur-fast);
+}
+.zp-clock-main:active:not(:disabled) {
+  transform: scale(0.98);
+}
+.zp-clock-main.is-start {
+  background: var(--c-ok);
+  color: #04120a;
+}
+.zp-clock-main.is-stop {
+  background: var(--c-danger);
+  color: #fff;
+}
+.zp-clock-main:disabled {
+  background: var(--c-surface-3);
+  color: var(--c-text-3);
+}
+.zp-clock-ico {
+  width: 32px;
+  height: 32px;
+}
+.zp-clock-next {
+  min-height: var(--tap-min);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--c-border-strong);
+  background: var(--c-surface-3);
+  font-weight: 700;
+  font-size: 17px;
+}
+.zp-clock-next:disabled {
+  opacity: 0.4;
+}
+
+/* ───────────── Akce ───────────── */
+
+.zp-act-btn {
+  min-height: var(--tap-min);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--c-border-strong);
+  border-left: 5px solid var(--tc);
+  background: var(--c-surface-2);
+  font-weight: 700;
+  font-size: 16px;
+  text-align: left;
+}
+.zp-act-btn:active {
+  background: var(--c-surface-3);
+}
+.zp-act-btn .card-chip {
+  font-size: 20px;
+}
+.zp-act-ico {
+  width: 22px;
+  height: 22px;
+}
+
+.zp-cards {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.zp-cards li {
+  display: grid;
+  grid-template-columns: 16px 44px 1fr auto;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: var(--r-md);
+  background: var(--c-surface-2);
+  border-left: 4px solid var(--tc);
+  font-size: 15px;
+}
+.zp-cards b {
+  font-family: var(--font-display);
+  font-size: 18px;
+}
+.zp-cards span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.zp-cards-time {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 24px;
+  color: var(--c-card-yellow);
+}
+.zp-cards-time.is-red {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--c-text-3);
+}
+
+/* ───────────── Časová osa ───────────── */
+
+.zp-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.zp-timeline li {
+  display: grid;
+  grid-template-columns: 42px 34px 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 4px;
+  border-bottom: 1px solid var(--c-border);
+}
+.zp-timeline li.is-last {
+  background: var(--c-surface-2);
+  border-radius: var(--r-md);
+  border-bottom-color: transparent;
+}
+.zp-tl-min {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  text-align: right;
+  color: var(--c-text-2);
+}
+.zp-tl-ico {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-sm);
+  background: var(--c-surface-3);
+  color: var(--c-text-2);
+}
+.zp-tl-ico.has-team {
+  background: color-mix(in srgb, var(--tc) 30%, var(--c-surface-3));
+  color: #fff;
+}
+.zp-tl-ico .ico {
+  width: 20px;
+  height: 20px;
+}
+.zp-tl-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.zp-tl-text b {
+  font-size: 16px;
+}
+.zp-tl-text em {
+  font-style: normal;
+  color: var(--c-ok);
+}
+.zp-tl-team {
+  color: var(--c-text-2);
+  font-weight: 600;
+}
+.zp-tl-text > span {
+  font-size: 14px;
+  color: var(--c-text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ───────────── Spodní lišta ZPĚT ───────────── */
+
+.zp-bottom {
+  position: fixed;
+  z-index: 20;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+  background: linear-gradient(180deg, transparent, var(--c-bg) 30%);
+}
+.zp-undo {
+  width: 100%;
+  max-width: 616px;
+  margin: 0 auto;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 18px;
+  border-radius: var(--r-lg);
+  border: 2px solid var(--c-focus);
+  background: #12233a;
+  color: #fff;
+  text-align: left;
+  box-shadow: var(--shadow-2);
+}
+.zp-undo:active:not(:disabled) {
+  transform: scale(0.98);
+}
+.zp-undo:disabled {
+  border-color: var(--c-border);
+  background: var(--c-surface-2);
+  color: var(--c-text-3);
+}
+.zp-undo-ico {
+  width: 34px;
+  height: 34px;
+  flex: none;
+}
+.zp-undo-txt {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.zp-undo-txt b {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 30px;
+  letter-spacing: 0.1em;
+  line-height: 1;
+}
+.zp-undo-txt span {
+  font-size: 14px;
+  color: var(--c-text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ───────────── Výběr hráče (bottom sheet) ───────────── */
+
+.zp-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(0, 0, 0, 0.66);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  animation: fade-in 180ms ease-out;
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+}
+.zp-sheet {
+  width: 100%;
+  max-width: 640px;
+  max-height: 88dvh;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--r-xl) var(--r-xl) 0 0;
+  background: var(--c-surface-1);
+  border-top: 6px solid var(--tc);
+  padding: 16px 14px calc(14px + env(safe-area-inset-bottom));
+  animation: sheet-in 280ms var(--ease-out);
+}
+@keyframes sheet-in {
+  from { transform: translateY(40%); opacity: 0.4; }
+}
+.zp-sheet-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.zp-sheet-team {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-text-2);
+}
+.zp-sheet-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 30px;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+.zp-sheet-sub {
+  margin-top: 2px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--c-text);
+}
+.zp-sheet-close,
+.zp-icon-btn {
+  flex: none;
+  width: var(--tap-min);
+  height: var(--tap-min);
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-md);
+  border: 1px solid var(--c-border-strong);
+  background: var(--c-surface-2);
+}
+.zp-sheet-close .ico,
+.zp-icon-btn .ico {
+  width: 22px;
+  height: 22px;
+}
+.zp-jerseys {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+  gap: 8px;
+  overflow-y: auto;
+  padding: 2px;
+}
+.zp-jersey {
+  position: relative;
+  height: 76px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  border-radius: var(--r-md);
+  border: 2px solid color-mix(in srgb, var(--tc) 70%, transparent);
+  background: color-mix(in srgb, var(--tc) 20%, var(--c-surface-2));
+}
+.zp-jersey:active {
+  background: var(--tc);
+  color: var(--tc-text);
+}
+.zp-jersey.has-yellow::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 9px;
+  height: 13px;
+  border-radius: 2px;
+  background: var(--c-card-yellow);
+}
+.zp-jersey-num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 34px;
+  line-height: 1;
+}
+.zp-jersey-name {
+  max-width: 100%;
+  padding: 0 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--c-text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.zp-sheet-foot {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+.zp-sheet-none,
+.zp-sheet-cancel {
+  height: var(--tap-min);
+  border-radius: var(--r-md);
+  font-weight: 800;
+  font-size: 17px;
+}
+.zp-sheet-none {
+  border: 0;
+  background: var(--tc);
+  color: var(--tc-text);
+}
+.zp-sheet-cancel {
+  border: 1px solid var(--c-border-strong);
+  background: var(--c-surface-3);
+}
+
+/* ───────────── Nastavení ───────────── */
+
+.zp-setup {
+  user-select: auto;
+  -webkit-user-select: auto;
+  padding-bottom: 40px;
+}
+.zp-setup-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: calc(10px + env(safe-area-inset-top)) 12px 10px;
+  background: var(--c-surface-1);
+  border-bottom: 1px solid var(--c-border);
+}
+.zp-setup-bar h1 {
+  flex: 1;
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.zp-save {
+  height: var(--tap-min);
+  padding: 0 22px;
+  border-radius: var(--r-md);
+  border: 0;
+  background: var(--c-ok);
+  color: #04120a;
+  font-weight: 800;
+  font-size: 17px;
+}
+.zp-save:disabled {
+  opacity: 0.4;
+}
+.zp-form-h {
+  margin-bottom: 10px;
+}
+.zp-form-h-team {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.zp-form-h-team::before {
+  content: '';
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  background: var(--tc);
+}
+.zp-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+  flex: 1;
+  min-width: 0;
+}
+.zp-field > span {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--c-text-2);
+}
+.zp-field input,
+.zp-official input,
+.zp-roster-row input {
+  height: 52px;
+  padding: 0 12px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--c-border-strong);
+  background: var(--c-surface-2);
+  font-size: 17px; /* ≥ 16 px – iOS nezoomuje */
+  min-width: 0;
+}
+.zp-short-input {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 24px !important;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.zp-field-row {
+  display: flex;
+  gap: 10px;
+}
+.zp-color {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 52px;
+}
+.zp-color input[type='color'] {
+  width: 64px;
+  padding: 4px;
+}
+.zp-color code {
+  font-size: 15px;
+  color: var(--c-text-2);
+}
+.zp-seg {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.zp-seg button {
+  min-height: var(--tap-min);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: var(--r-md);
+  border: 1px solid var(--c-border-strong);
+  background: var(--c-surface-2);
+  text-align: left;
+}
+.zp-seg button b {
+  font-size: 16px;
+}
+.zp-seg button span {
+  font-size: 13px;
+  color: var(--c-text-2);
+}
+.zp-seg button.is-active {
+  border: 2px solid var(--c-ok);
+  background: rgba(43, 212, 106, 0.1);
+}
+.zp-roster summary {
+  min-height: var(--tap-min);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  border-radius: var(--r-md);
+  background: var(--c-surface-2);
+  border: 1px solid var(--c-border-strong);
+  font-weight: 800;
+  cursor: pointer;
+}
+.zp-roster summary span {
+  font-weight: 600;
+  color: var(--c-text-2);
+  font-size: 14px;
+}
+.zp-hint {
+  font-size: 14px;
+  color: var(--c-text-2);
+}
+.zp-roster-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.zp-roster-div {
+  margin: 14px 0 6px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tc);
+}
+.zp-roster-div.is-out {
+  color: var(--c-text-3);
+}
+.zp-roster-row {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  grid-template-areas: 'num name' 'pos tools';
+  gap: 6px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--c-border);
+}
+.zp-roster-num {
+  grid-area: num;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 22px !important;
+}
+.zp-roster-name { grid-area: name; }
+.zp-roster-pos {
+  grid-area: pos;
+  grid-column: 1 / 2;
+  font-size: 14px !important;
+  padding: 0 6px !important;
+}
+.zp-roster-tools {
+  grid-area: tools;
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+}
+.zp-roster-tools button {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--c-border-strong);
+  background: var(--c-surface-3);
+  font-size: 18px;
+}
+@media (min-width: 480px) {
+  .zp-roster-row {
+    grid-template-columns: 56px 1fr 150px auto;
+    grid-template-areas: 'num name pos tools';
+  }
+  .zp-roster-pos {
+    grid-column: auto;
+  }
+}
+.zp-add,
+.zp-wide-btn {
+  width: 100%;
+  min-height: var(--tap-min);
+  margin-top: 10px;
+  border-radius: var(--r-md);
+  border: 1px dashed var(--c-border-strong);
+  background: transparent;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--c-text-2);
+}
+.zp-wide-btn {
+  border-style: solid;
+  background: var(--c-surface-2);
+  color: var(--c-text);
+}
+.zp-wide-btn.is-danger {
+  border-color: rgba(255, 77, 79, 0.6);
+  color: var(--c-danger);
+}
+.zp-official {
+  margin-bottom: 8px;
+}
+.zp-official input {
+  flex: 1;
+}
+
+/* Na širším displeji (tablet/desktop) zachovat mobilní šířku */
+@media (min-width: 641px) {
+  .zp {
+    border-left: 1px solid var(--c-border);
+    border-right: 1px solid var(--c-border);
+  }
+}
