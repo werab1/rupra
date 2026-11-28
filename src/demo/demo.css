@@ -14,6 +14,7 @@ body {
   height: 100%;
   display: grid;
   grid-template-rows: auto 1fr;
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .dm-bar {
@@ -289,7 +290,10 @@ body {
   .dm-tabs {
     order: 3;
     width: 100%;
+    min-width: 0;
+    max-width: 100%;
     overflow-x: auto;
+    scrollbar-width: none;
   }
   .dm-tabs button {
     flex: 1;
@@ -297,4 +301,13 @@ body {
   .dm-restart {
     margin-left: auto;
   }
+}
+
+/* Hřiště v rámečku telefonu */
+.dm-phone .hr {
+  min-height: 100%;
+  max-width: none;
+}
+.dm-plain .hr {
+  min-height: 100%;
 }

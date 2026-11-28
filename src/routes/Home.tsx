@@ -1,7 +1,9 @@
 import './home.css';
 
 const ROUTES = [
-  { href: '/zapis', title: 'Zápis', desc: 'Mobil zapisovatele na stadionu – body, čas, střídání, karty.', tag: 'Mobil' },
+  { href: '/hriste', title: 'Hřiště', desc: 'Člověk u hřiště: vybere hráče, zaškrtne, co udělal, a pošle ke kontrole.', tag: 'Mobil' },
+  { href: '/kontrola', title: 'Kontrola', desc: 'Schvalování hlášení z hřiště. Do režie jde jen to, co se schválí.', tag: 'Tablet / desktop' },
+  { href: '/zapis', title: 'Přímý zápis', desc: 'Mobil zapisovatele na stadionu – body, čas, střídání, karty.', tag: 'Mobil' },
   { href: '/panel', title: 'Režie', desc: 'Řídicí panel pro klienta doma – náhled a spouštění grafik.', tag: 'Desktop' },
   { href: '/overlay', title: 'Overlay', desc: 'Výstup 1920 × 1080 s průhledností pro vMix Browser input.', tag: 'vMix' },
 ];

@@ -65,6 +65,7 @@ export function createInitialState(setup: MatchSetup = sampleSetup()): AppState 
     graphics: initialGraphics(),
     auto: { score: true, sub: true, card: true },
     notification: null,
+    submissions: [],
   };
 }
 
@@ -318,7 +319,62 @@ export function reducer(state: AppState, action: Stamped): AppState {
       const events = state.events.slice(0, -1);
       const { live } = replay(state.setup, events);
       const notification = state.notification?.eventId === removed.id ? null : state.notification;
-      return bump(state, ts, { events, live, notification });
+      // Pokud vrácená událost vznikla schválením hlášení, poznačit to u hlášení.
+      const submissions = (state.submissions ?? []).map((s) =>
+        s.eventId === removed.id ? { ...s, status: 'rejected' as const, note: 'Vráceno tlačítkem ZPĚT', eventId: undefined } : s,
+      );
+      return bump(state, ts, { events, live, notification, submissions });
+    }
+
+    case 'SUBMIT': {
+      if (!action.items.length) return state;
+      const minute = minuteLabel(displayMs(state.live, state.setup.variant, ts));
+      const added = action.items.map((it, i) => ({
+        ...it,
+        id: `${action.id}-${i}`,
+        ts,
+        minute,
+        status: 'pending' as const,
+      }));
+      return bump(state, ts, { submissions: [...(state.submissions ?? []), ...added] });
+    }
+
+    case 'APPROVE': {
+      const subs = state.submissions ?? [];
+      const s = subs.find((x) => x.id === action.submissionId && x.status === 'pending');
+      if (!s) return state;
+      const matchAction: MatchAction =
+        s.kind === 'yellow' || s.kind === 'red'
+          ? { type: 'CARD', side: s.side, card: s.kind, playerId: s.playerId }
+          : { type: 'SCORE', side: s.side, kind: s.kind, playerId: s.playerId };
+      // Událost dostane čas odeslání z hřiště (ne čas schválení), ale nikdy dřív než poslední událost.
+      const lastTs = state.events.length ? state.events[state.events.length - 1].ts : 0;
+      const eventId = `${s.id}-ev`;
+      const applied = reducer(state, { ...matchAction, id: eventId, ts: Math.max(s.ts, lastTs) });
+      const ok = applied !== state;
+      const submissions = subs.map((x) =>
+        x.id === s.id
+          ? ok
+            ? { ...x, status: 'approved' as const, reviewedAt: ts, eventId }
+            : { ...x, status: 'rejected' as const, reviewedAt: ts, note: 'Nelze zapsat v aktuálním stavu zápasu' }
+          : x,
+      );
+      // Oznámení ve vysílání se má ukázat až teď (při schválení), ne v čase odeslání z hřiště.
+      const notification =
+        ok && applied.notification?.eventId === eventId
+          ? { ...applied.notification, shownAt: ts, until: ts + NOTIFICATION_MS }
+          : (ok ? applied : state).notification;
+      return { ...(ok ? applied : state), notification, submissions, rev: state.rev + 1, updatedAt: ts };
+    }
+
+    case 'REJECT': {
+      const subs = state.submissions ?? [];
+      if (!subs.some((x) => x.id === action.submissionId && x.status === 'pending')) return state;
+      return bump(state, ts, {
+        submissions: subs.map((x) =>
+          x.id === action.submissionId ? { ...x, status: 'rejected' as const, reviewedAt: ts, note: action.note } : x,
+        ),
+      });
     }
 
     case 'SHOW_GRAPHIC': {
@@ -378,7 +434,7 @@ export function reducer(state: AppState, action: Stamped): AppState {
 
     case 'RESET_MATCH': {
       const fresh = createInitialState(state.setup);
-      return bump(state, ts, { events: [], live: fresh.live, graphics: fresh.graphics, notification: null });
+      return bump(state, ts, { events: [], live: fresh.live, graphics: fresh.graphics, notification: null, submissions: [] });
     }
   }
   return state;

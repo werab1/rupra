@@ -20,7 +20,7 @@ import type { ClientRole, ConnectionInfo, SyncAdapter } from './SyncAdapter';
  */
 export class SupabaseAdapter implements SyncAdapter {
   private state: AppState = createInitialState();
-  private readonly connection: ConnectionInfo = { status: 'offline', peers: { zapis: 0, panel: 0, overlay: 0 } };
+  private readonly connection: ConnectionInfo = { status: 'offline', peers: { zapis: 0, panel: 0, overlay: 0, hriste: 0, kontrola: 0 } };
 
   constructor(
     readonly url = import.meta.env.VITE_SUPABASE_URL,

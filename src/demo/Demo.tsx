@@ -1,15 +1,24 @@
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import type { GraphicId } from '../domain/types';
 import { useMatch } from '../hooks/useMatch';
+import Hriste from '../routes/hriste/Hriste';
+import Kontrola from '../routes/kontrola/Kontrola';
 import Overlay from '../routes/overlay/Overlay';
 import Panel from '../routes/panel/Panel';
 import Zapis from '../routes/zapis/Zapis';
 
-type View = 'vse' | 'zapis' | 'rezie' | 'overlay';
+type View = 'tok' | 'hriste' | 'kontrola' | 'vse' | 'zapis' | 'rezie' | 'overlay';
 
 const VIEWS: { id: View; label: string; hint: string }[] = [
-  { id: 'vse', label: 'Vše vedle sebe', hint: 'Ťukněte v telefonu na body nebo kartu – režie i náhled se změní okamžitě.' },
-  { id: 'zapis', label: 'Zápis', hint: 'Mobil zapisovatele na stadionu. Body, čas, střídání, karty a ZPĚT.' },
+  {
+    id: 'tok',
+    label: 'Hřiště → Kontrola',
+    hint: 'Vlevo klepněte na hráče, zaškrtněte akci a odešlete. Vpravo ji schvalte – teprve pak se objeví v režii a ve vysílání.',
+  },
+  { id: 'hriste', label: 'Hřiště', hint: 'Člověk u hřiště: vybere tým a hráče, zaškrtne, co udělal, a odešle ke kontrole.' },
+  { id: 'kontrola', label: 'Kontrola', hint: 'Fronta hlášení z hřiště s automatickou kontrolou. Schválené jde do režie.' },
+  { id: 'vse', label: 'Přímý zápis + režie', hint: 'Původní přímý zápis: ťuknutí v telefonu jde rovnou do režie a náhledu.' },
+  { id: 'zapis', label: 'Přímý zápis', hint: 'Mobil zapisovatele na stadionu. Body, čas, střídání, karty a ZPĚT.' },
   { id: 'rezie', label: 'Režie', hint: 'Panel klienta doma. Grafiky spouštějte dlaždicemi nebo klávesami 1–9, Esc skryje vše.' },
   { id: 'overlay', label: 'Overlay', hint: 'Výstup 1920 × 1080 tak, jak ho uvidí vMix. Pozadí je ve skutečnosti průhledné.' },
 ];
@@ -21,7 +30,7 @@ function viewFromHash(): View | null {
 
 function defaultView(): View {
   const w = window.innerWidth;
-  return w >= 1480 ? 'vse' : w >= 1100 ? 'rezie' : 'zapis';
+  return w >= 1100 ? 'tok' : 'hriste';
 }
 
 export function Demo({ onRestart }: { onRestart: () => void }) {
@@ -91,6 +100,33 @@ export function Demo({ onRestart }: { onRestart: () => void }) {
       </header>
 
       <main className={`dm-stage dm-view-${view}`}>
+        {view === 'tok' && (
+          <div className="dm-split">
+            <Phone>
+              <Hriste />
+            </Phone>
+            <div className="dm-panel">
+              <Kontrola embedded />
+            </div>
+          </div>
+        )}
+        {view === 'hriste' &&
+          (wide ? (
+            <div className="dm-center">
+              <Phone>
+                <Hriste />
+              </Phone>
+            </div>
+          ) : (
+            <div className="dm-plain">
+              <Hriste />
+            </div>
+          ))}
+        {view === 'kontrola' && (
+          <div className="dm-panel">
+            <Kontrola embedded />
+          </div>
+        )}
         {view === 'vse' && (
           <div className="dm-split">
             <Phone>

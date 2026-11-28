@@ -208,6 +208,19 @@ function Header({
           {state.setup.competition} · {VARIANTS[state.setup.variant].label}
         </span>
       </div>
+      {(() => {
+        const n = (state.submissions ?? []).filter((s) => s.status === 'pending').length;
+        const pill = (
+          <span className={`pn-review ${n ? 'is-on' : ''}`} title="Hlášení z hřiště čekající na schválení">
+            Ke kontrole <b>{n}</b>
+          </span>
+        );
+        return embedded ? pill : (
+          <a href="/kontrola" target="_blank" rel="noreferrer" className="pn-review-link">
+            {pill}
+          </a>
+        );
+      })()}
       <div className={`pn-onair ${anyOn ? 'is-on' : ''}`}>
         <i /> {anyOn ? 'ON AIR' : 'ČISTÝ VÝSTUP'}
       </div>

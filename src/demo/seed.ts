@@ -22,5 +22,18 @@ export function seedDemoState(now = Date.now()): AppState {
   at({ type: 'CARD', side: 'away', card: 'yellow', playerId: 'a6' }, t0 + 17 * MIN + 5_000);
   at({ type: 'SUB', side: 'home', outId: 'h3', inId: 'h18' }, t0 + 20 * MIN + 30_000);
   at({ type: 'SHOW_GRAPHIC', graphic: 'scorebug' }, now - 1000);
+  // Hlášení z hřiště: jedno už schválené, dvě čekají na kontrolu (jedno s varováním).
+  at({ type: 'SUBMIT', items: [{ side: 'home', playerId: 'h12', kind: 'penalty' }] }, t0 + 21 * MIN + 40_000);
+  at({ type: 'APPROVE', submissionId: `demo-${n}-0` }, t0 + 22 * MIN);
+  at(
+    {
+      type: 'SUBMIT',
+      items: [
+        { side: 'away', playerId: 'a14', kind: 'try' },
+        { side: 'away', playerId: 'a6', kind: 'yellow' },
+      ],
+    },
+    now - 25_000,
+  );
   return { ...s, notification: null };
 }

@@ -775,3 +775,30 @@ kbd {
   color: var(--c-text-2);
   user-select: text;
 }
+
+.pn-review-link {
+  text-decoration: none;
+}
+.pn-review {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--c-border);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--c-text-3);
+  white-space: nowrap;
+}
+.pn-review b {
+  color: var(--c-text-2);
+}
+.pn-review.is-on {
+  border-color: var(--c-warn);
+  color: var(--c-warn);
+}
+.pn-review.is-on b {
+  color: var(--c-warn);
+}

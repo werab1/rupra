@@ -1,6 +1,6 @@
 import { createInitialState, reducer } from '../domain/reducer';
 import type { Action, AppState } from '../domain/types';
-import { stampAction, type ClientRole, type ConnectionInfo, type SyncAdapter } from './SyncAdapter';
+import { EMPTY_PEERS, stampAction, type ClientRole, type ConnectionInfo, type SyncAdapter } from './SyncAdapter';
 
 const STORAGE_KEY = 'rupra:state:v1';
 const CHANNEL = 'rupra-sync-v1';
@@ -17,7 +17,8 @@ function load(): AppState | null {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
     const parsed = JSON.parse(raw) as AppState;
-    return parsed && parsed.schema === 1 ? parsed : null;
+    if (!parsed || parsed.schema !== 1) return null;
+    return { ...parsed, submissions: parsed.submissions ?? [] };
   } catch {
     return null;
   }
@@ -49,7 +50,7 @@ export class LocalAdapter implements SyncAdapter {
   private readonly tabId = Math.random().toString(36).slice(2, 10);
   private role: ClientRole | null = null;
   private peers = new Map<string, { role: ClientRole | null; seen: number }>();
-  private connection: ConnectionInfo = { status: 'degraded', peers: { zapis: 0, panel: 0, overlay: 0 } };
+  private connection: ConnectionInfo = { status: 'degraded', peers: { ...EMPTY_PEERS } };
   private timer: number | undefined;
 
   /** @param seed počáteční stav, pokud v úložišti nic není (např. ukázkový zápas v demu) */
@@ -157,7 +158,7 @@ export class LocalAdapter implements SyncAdapter {
 
   private refreshConnection = () => {
     const now = Date.now();
-    const peers = { zapis: 0, panel: 0, overlay: 0 } as Record<ClientRole, number>;
+    const peers = { ...EMPTY_PEERS };
     for (const [id, p] of this.peers) {
       if (now - p.seen > PEER_TIMEOUT_MS) {
         this.peers.delete(id);
@@ -175,9 +176,7 @@ export class LocalAdapter implements SyncAdapter {
     const prev = this.connection;
     if (
       prev.status !== status ||
-      prev.peers.zapis !== peers.zapis ||
-      prev.peers.panel !== peers.panel ||
-      prev.peers.overlay !== peers.overlay
+      (Object.keys(peers) as ClientRole[]).some((r) => prev.peers[r] !== peers[r])
     ) {
       this.connection = { status, peers };
       for (const l of this.connListeners) l(this.connection);

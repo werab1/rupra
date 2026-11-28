@@ -16,7 +16,7 @@ const base = new LocalAdapter(() => seedDemoState());
 if (Date.now() - base.getState().updatedAt > 3 * 60 * 60 * 1000) {
   base.dispatch({ type: 'REPLACE_STATE', state: seedDemoState() });
 }
-const connected: ConnectionInfo = { status: 'online', peers: { zapis: 1, panel: 1, overlay: 1 } };
+const connected: ConnectionInfo = { status: 'online', peers: { zapis: 1, panel: 1, overlay: 1, hriste: 1, kontrola: 1 } };
 const adapter: SyncAdapter = {
   getState: base.getState,
   dispatch: base.dispatch,

@@ -52,6 +52,30 @@ export type GraphicId =
 
 export type AutoKind = 'score' | 'sub' | 'card';
 
+/** Co může člověk u hřiště hráči připsat. */
+export type SubmissionKind = ScoreKind | 'yellow' | 'red';
+
+export interface SubmissionItem {
+  side: Side;
+  /** null = týmová akce (např. trestné položení) */
+  playerId: string | null;
+  kind: SubmissionKind;
+}
+
+/** Hlášení z hřiště čekající na kontrolu. Do zápasu se propíše až po schválení. */
+export interface Submission extends SubmissionItem {
+  id: string;
+  /** Kdy bylo odesláno (ms) – podle toho se počítá herní minuta i začátek žluté karty */
+  ts: number;
+  /** Herní minuta v okamžiku odeslání, např. "23'" */
+  minute: string;
+  status: 'pending' | 'approved' | 'rejected';
+  reviewedAt?: number;
+  /** Id zápasové události vzniklé schválením */
+  eventId?: string;
+  note?: string;
+}
+
 /** Akce měnící průběh zápasu – logují se a jdou vrátit přes UNDO. */
 export type MatchAction =
   | { type: 'SCORE'; side: Side; kind: ScoreKind; playerId?: string | null }
@@ -74,6 +98,11 @@ export type ControlAction =
   | { type: 'REPLAY_NOTIFICATION' }
   | { type: 'SET_SETUP'; setup: MatchSetup }
   | { type: 'RESET_MATCH' }
+  /** Hřiště: odeslat zaškrtnuté položky ke kontrole */
+  | { type: 'SUBMIT'; items: SubmissionItem[] }
+  /** Kontrola: schválit → zapíše se do zápasu (a tedy do režie) */
+  | { type: 'APPROVE'; submissionId: string }
+  | { type: 'REJECT'; submissionId: string; note?: string }
   /** Nahradí celý stav (import, demo). */
   | { type: 'REPLACE_STATE'; state: AppState };
 
@@ -172,4 +201,6 @@ export interface AppState {
   graphics: GraphicsState;
   auto: Record<AutoKind, boolean>;
   notification: Notification | null;
+  /** Hlášení z hřiště (fronta ke kontrole + historie) */
+  submissions: Submission[];
 }

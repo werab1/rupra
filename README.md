@@ -4,7 +4,9 @@ Rupra propojuje tři obrazovky:
 
 | Routa | Kdo ji používá | Na čem |
 |---|---|---|
-| **`/zapis`** | zapisovatel na stadionu: body, čas, střídání, karty, ZPĚT | mobil (tmavý režim, ovládání palcem) |
+| **`/hriste`** | člověk přímo u hřiště: vybere hráče, zaškrtne, co udělal, a odešle **ke kontrole** | mobil |
+| **`/kontrola`** | druhý člověk schvaluje nebo zamítá hlášení z hřiště; do režie jde jen schválené | tablet / desktop |
+| **`/zapis`** | přímý zápis: body, čas, střídání, karty, ZPĚT (jde rovnou do režie) | mobil (tmavý režim, ovládání palcem) |
 | **`/panel`** | klient doma: náhled výstupu, spouštění grafik, export dat | desktop |
 | **`/overlay`** | výstup do vysílání: 1920 × 1080, průhledné pozadí | vMix → Browser input |
 
@@ -57,7 +59,7 @@ Indikátor připojení v horní liště zápisu:
 
 ### Ukázka v jedné stránce (artefakt)
 
-Pro rychlé předvedení jsou všechny tři obrazovky i v jedné stránce nad rozehraným ukázkovým zápasem (`demo.html`, `src/demo/`). Sestavení do jednoho HTML souboru:
+Pro rychlé předvedení jsou všechny obrazovky (hřiště, kontrola, přímý zápis, režie, overlay) i v jedné stránce nad rozehraným ukázkovým zápasem (`demo.html`, `src/demo/`). Sestavení do jednoho HTML souboru:
 
 ```bash
 node scripts/build-artifact.mjs
@@ -76,6 +78,17 @@ node scripts/smoke-test.cjs
 ```
 
 Test běží proti spuštěnému `npm run dev`. Ověří synchronizaci, refresh, shodu času, UNDO, poločasy a odpočet karet. Screenshoty všech grafik uloží do `screenshots-tmp/`.
+
+## Hlášení z hřiště a kontrola
+
+Člověk u hřiště nic nezapisuje rovnou do vysílání:
+
+1. Na **`/hriste`** vybere tým, klepne na hráče a zaškrtne, co udělal: položení, proměněný kop, trestný kop, drop goal, žlutou nebo červenou kartu. Trestné položení je týmová akce nahoře v seznamu. Zaškrtnuté položky se sbírají dole a odešlou se jedním tlačítkem **ODESLAT KE KONTROLE**. Neodeslaný koncept přežije obnovení stránky.
+2. Na **`/kontrola`** se hlášení objeví ve frontě. U každého proběhne automatická kontrola smysluplnosti: hráč není na hřišti, hráč už byl vyloučen, druhá žlutá karta, kop bez položení, možný duplikát, zápas neběží. Kontrolor hlášení **schválí** (Enter) nebo **zamítne** (Delete). „Schválit vše bez varování“ projde frontu postupně.
+3. Teprve schválením vznikne událost v zápase: změní se skóre, v režii se objeví záznam a ve vysílání oznámení. Herní minuta se bere z okamžiku odeslání z hřiště.
+4. Člověk u hřiště vidí u každého odeslaného hlášení stav **Čeká na kontrolu / Schváleno / Zamítnuto**. Režie ukazuje v hlavičce počet hlášení ke kontrole.
+
+Schválenou událost jde vrátit tlačítkem ZPĚT v přímém zápisu. Hlášení se pak označí jako zamítnuté s poznámkou „Vráceno tlačítkem ZPĚT“.
 
 ## Vložení `/overlay` do vMixu
 
@@ -122,6 +135,7 @@ src/
   domain/          čistá logika bez Reactu
     types.ts       stav zápasu, akce (SCORE, CLOCK_START, CLOCK_STOP, NEXT_HALF, SUB, CARD, UNDO, SHOW_GRAPHIC…)
     reducer.ts     kořenový reducer + přehrávání událostí (event sourcing)
+    review.ts      automatická kontrola hlášení z hřiště
     clock.ts       čas z časových razítek, odpočet karet
     rules.ts       body a varianty XV / 7s
     exporters.ts   JSON a XML pro vMix

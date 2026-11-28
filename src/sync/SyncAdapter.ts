@@ -1,7 +1,9 @@
 import type { Action, AppState } from '../domain/types';
 
 /** Role obrazovky – používá se pro indikaci, kdo je připojený. */
-export type ClientRole = 'zapis' | 'panel' | 'overlay';
+export type ClientRole = 'zapis' | 'panel' | 'overlay' | 'hriste' | 'kontrola';
+
+export const EMPTY_PEERS: Record<ClientRole, number> = { zapis: 0, panel: 0, overlay: 0, hriste: 0, kontrola: 0 };
 
 /**
  * online   = synchronizace funguje a vidíme další obrazovku
