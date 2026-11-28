@@ -1,6 +1,6 @@
 <title>Rupra Studio</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: sticky top bar with the two-sides switch; zapisovatel = one phone column, příjemce = inbox | preview */
 :root{--bg:#0a0c0f;--s1:#111419;--s2:#171b21;--s3:#1f242c;--s4:#2a303a;--bd:#252b34;--bd2:#353d49;
@@ -16,64 +16,62 @@ button{font:inherit;color:inherit;cursor:pointer}
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--bd)}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
 .top .in{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-block:10px;max-width:1280px;margin:0 auto}
-.brand{display:flex;align-items:center;gap:8px;font:800 26px/1 var(--disp);letter-spacing:.06em}
-.brand em{font:700 11px var(--ui);letter-spacing:.12em;color:var(--brand);border:1px solid #5a1d1a;background:#2a1211;padding:3px 7px;border-radius:4px;font-style:normal}
+.brand{display:flex;align-items:center;gap:8px;font:500 26px/1 var(--disp);letter-spacing:.06em}
+.brand em{font:500 11px var(--ui);letter-spacing:.12em;color:var(--brand);border:1px solid #5a1d1a;background:#2a1211;padding:3px 7px;border-radius:4px;font-style:normal}
 .sw{margin-left:auto;display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--s2);border:1px solid var(--bd);padding:4px;border-radius:12px;min-width:min(100%,440px)}
-.sw button{min-height:52px;border:0;border-radius:9px;background:none;color:var(--tx2);font:700 20px var(--disp);letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:10px;line-height:1.05;text-align:center}
+.sw button{min-height:44px;border:0;border-radius:9px;background:none;color:var(--tx2);font:500 17px var(--disp);letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:10px;line-height:1.05;text-align:center}
 .sw button small{display:block;font:500 11px var(--ui);letter-spacing:.03em;text-transform:none;color:var(--tx3)}
 .sw button[aria-pressed=true]{background:var(--tx);color:#0a0c0f}.sw button[aria-pressed=true] small{color:#4a525e}
-.badge{background:var(--brand);color:#fff;border-radius:999px;font:700 13px var(--ui);min-width:24px;height:24px;padding:0 7px;display:inline-flex;align-items:center;justify-content:center}
+.badge{background:var(--brand);color:#fff;border-radius:999px;font:500 13px var(--ui);min-width:24px;height:24px;padding:0 7px;display:inline-flex;align-items:center;justify-content:center}
 .badge[hidden]{display:none}
 .view{max-width:1280px;margin:0 auto;padding-top:16px}
 /* ---------- Zapisovatel ---------- */
 .phone{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
 .bar{display:grid;grid-template-columns:1fr auto 1fr;background:var(--s1);border:1px solid var(--bd);border-radius:12px;overflow:hidden}
-.bar .tm{display:flex;align-items:center;gap:12px;padding:14px 16px;font:800 34px/1 var(--disp)}
+.bar .tm{display:flex;align-items:center;gap:10px;padding:10px 14px;font:500 26px/1 var(--disp)}
 .bar .tm:first-child{background:linear-gradient(90deg,color-mix(in srgb,var(--home) 45%,#0a0c0f),transparent);border-left:6px solid var(--home)}
 .bar .tm:last-child{justify-content:flex-end;flex-direction:row-reverse;background:linear-gradient(270deg,color-mix(in srgb,var(--away) 45%,#0a0c0f),transparent);border-right:6px solid var(--away)}
-.bar .tm span{font-size:22px;letter-spacing:.06em;opacity:.8}.bar .tm b{font-size:58px;font-weight:800}
+.bar .tm span{font-size:18px;letter-spacing:.06em;opacity:.8}.bar .tm b{font-size:42px}
 .bar .ck{padding:10px 14px;text-align:center;border-inline:1px solid var(--bd)}
-.bar .ck b{display:block;font:800 40px/1 var(--disp);letter-spacing:.02em}.bar .ck i{font:600 12px var(--ui);letter-spacing:.1em;color:var(--tx2);font-style:normal;text-transform:uppercase}
-.card{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:12px;min-width:0}
-.hd{display:flex;justify-content:space-between;align-items:center;gap:10px;font:600 13px var(--ui);letter-spacing:.14em;text-transform:uppercase;color:var(--tx3)}
-.chip{border:1px solid var(--bd2);background:var(--s2);border-radius:999px;padding:9px 16px;font:600 14px var(--ui);color:var(--tx);letter-spacing:0;text-transform:none}
+.bar .ck b{display:block;font:500 30px/1 var(--disp);letter-spacing:.02em}.bar .ck i{font:500 12px var(--ui);letter-spacing:.1em;color:var(--tx2);font-style:normal;text-transform:uppercase}
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.hd{display:flex;justify-content:space-between;align-items:center;gap:10px;font:500 13px var(--ui);letter-spacing:.14em;text-transform:uppercase;color:var(--tx3)}
+.chip{border:1px solid var(--bd2);background:var(--s2);border-radius:999px;padding:9px 16px;font:500 14px var(--ui);color:var(--tx);letter-spacing:0;text-transform:none}
 .cols{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .cols>div{display:flex;flex-direction:column;gap:10px;min-width:0}
-.tname{height:44px;border-radius:6px;display:flex;align-items:center;justify-content:center;font:800 26px var(--disp);letter-spacing:.08em;color:#fff}
-.sbtn{min-height:56px;border-radius:12px;border:2px solid var(--c);background:color-mix(in srgb,var(--c) 22%,#0a0c0f);display:flex;align-items:center;gap:12px;padding:8px 14px;text-align:left;color:var(--tx);transition:transform .14s}
+.tname{height:34px;border-radius:6px;display:flex;align-items:center;justify-content:center;font:500 22px var(--disp);letter-spacing:.08em;color:#fff}
+.sbtn{min-height:44px;border-radius:12px;border:2px solid var(--c);background:color-mix(in srgb,var(--c) 22%,#0a0c0f);display:flex;align-items:center;gap:12px;padding:8px 14px;text-align:left;color:var(--tx);transition:transform .14s}
 .sbtn:active{transform:scale(.97)}
-.sbtn b{font:800 32px/1 var(--disp);min-width:46px}.sbtn span{font:600 16px/1.15 var(--ui)}
-.sbtn.main{min-height:84px;background:var(--c);border-color:var(--c)}.sbtn.main b{font-size:46px}.sbtn.main span{font-size:18px}
-.big{min-height:84px;border:0;border-radius:14px;width:100%;font:800 44px var(--disp);letter-spacing:.1em;display:flex;align-items:center;justify-content:center;gap:14px;text-transform:uppercase}
+.sbtn b{font:500 24px/1 var(--disp);min-width:38px}.sbtn span{font:400 14px/1.15 var(--ui)}
+.sbtn.main{min-height:58px;background:var(--c);border-color:var(--c)}.sbtn.main b{font-size:32px}.sbtn.main span{font-size:15px}
+.big{min-height:58px;border:0;border-radius:14px;width:100%;font:500 30px var(--disp);letter-spacing:.1em;display:flex;align-items:center;justify-content:center;gap:14px;text-transform:uppercase}
 .big.stop{background:#ff4d4f;color:#fff}.big.go{background:var(--ok);color:#06210f}
-.ghost{min-height:56px;width:100%;border-radius:12px;border:1px solid var(--bd2);background:var(--s2);font:600 17px var(--ui);display:flex;align-items:center;justify-content:center;gap:10px}
-.undo{min-height:84px;width:100%;border-radius:14px;border:2px solid var(--focus);background:#13203a;display:flex;align-items:center;gap:18px;padding:10px 22px;text-align:left}
+.ghost{min-height:44px;width:100%;border-radius:12px;border:1px solid var(--bd2);background:var(--s2);font:500 17px var(--ui);display:flex;align-items:center;justify-content:center;gap:10px}
+.undo{min-height:56px;width:100%;border-radius:14px;border:2px solid var(--focus);background:#13203a;display:flex;align-items:center;gap:18px;padding:10px 22px;text-align:left}
 .undo[disabled]{opacity:.4;cursor:default}
-.undo b{display:block;font:800 36px/1 var(--disp);letter-spacing:.08em}.undo small{font:500 15px var(--ui);color:var(--tx2)}
+.undo b{display:block;font:500 26px/1 var(--disp);letter-spacing:.08em}.undo small{font:500 15px var(--ui);color:var(--tx2)}
 .send{display:grid;grid-template-columns:1fr;gap:10px}
 .sendbtn{min-height:84px;border-radius:14px;border:2px solid var(--brand);background:#2a1211;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 20px;text-align:left}
-.sendbtn b{font:800 32px/1 var(--disp);letter-spacing:.08em;text-transform:uppercase;display:block}.sendbtn small{color:var(--tx2);font-size:14px}
+.sendbtn b{font:500 32px/1 var(--disp);letter-spacing:.08em;text-transform:uppercase;display:block}.sendbtn small{color:var(--tx2);font-size:14px}
 .sendbtn:active{background:var(--brand)}
 .sendbtn svg{flex:none}
 .sheet{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.6);display:flex;align-items:flex-end;justify-content:center}
 .sheet[hidden]{display:none}
 .sheet>div{width:min(100%,560px);background:var(--s1);border:1px solid var(--bd2);border-radius:18px 18px 0 0;padding:16px max(16px,env(safe-area-inset-left,0px)) calc(16px + env(safe-area-inset-bottom,0px))}
-.sheet h3{margin:0 0 12px;font:800 26px var(--disp);letter-spacing:.06em;text-transform:uppercase}
+.sheet h3{margin:0 0 12px;font:500 26px var(--disp);letter-spacing:.06em;text-transform:uppercase}
 .pl{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
-.pl button{min-height:64px;border-radius:10px;border:1px solid var(--bd2);background:var(--s2);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1}
-.pl b{font:800 26px var(--disp)}.pl span{font-size:11px;color:var(--tx2);max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.pl button{min-height:52px;border-radius:10px;border:1px solid var(--bd2);background:var(--s2);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1}
+.pl b{font:500 22px var(--disp)}.pl span{font-size:11px;color:var(--tx2);max-width:100%;overflow:hidden;text-overflow:ellipsis}
 .sheet .ghost{margin-top:10px}
-.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ok);color:#06210f;font:700 16px var(--ui);padding:14px 22px;border-radius:12px;opacity:0;pointer-events:none;transition:.25s;z-index:60;max-width:92vw;text-align:center}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ok);color:#06210f;font:500 16px var(--ui);padding:14px 22px;border-radius:12px;opacity:0;pointer-events:none;transition:.25s;z-index:60;max-width:92vw;text-align:center}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 /* ---------- Příjemce ---------- */
-.rcv{display:grid;grid-template-columns:340px minmax(0,1fr);gap:14px;align-items:start}
-@media(max-width:860px){.rcv{grid-template-columns:minmax(0,1fr)}}
 .inbox{display:flex;flex-direction:column;gap:8px}
 .file{width:100%;text-align:left;min-height:72px;border-radius:12px;border:1px solid var(--bd);background:var(--s2);padding:12px 14px;display:flex;flex-direction:column;gap:3px}
 .file[aria-current=true]{border-color:var(--tx);background:var(--s3)}
 .file .n{font:500 14px var(--mono);overflow-wrap:anywhere}
 .file .m{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--tx2)}
-.new{font:700 11px var(--ui);letter-spacing:.08em;color:#06210f;background:var(--ok);border-radius:4px;padding:2px 6px}
+.new{font:500 11px var(--ui);letter-spacing:.08em;color:#06210f;background:var(--ok);border-radius:4px;padding:2px 6px}
 .stage{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:10px;border:1px solid var(--bd)}
 .bg{position:absolute;inset:0}
 .bg.grass{background:linear-gradient(180deg,#2e6a35 0,#3a7d40 55%,#2c6531 100%)}
@@ -82,7 +80,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .bg.check{background:repeating-conic-gradient(#2a2f36 0% 25%,#1f2328 0% 50%) 0 0/24px 24px}
 .host{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0}
 .acts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
-.btn{min-height:56px;border-radius:12px;border:1px solid var(--bd2);background:var(--s2);font:700 18px var(--ui);padding:0 18px}
+.btn{min-height:56px;border-radius:12px;border:1px solid var(--bd2);background:var(--s2);font:500 18px var(--ui);padding:0 18px}
 .btn.pri{background:var(--brand);border-color:var(--brand);color:#fff}
 .btn[aria-pressed=true]{background:var(--tx);color:#0a0c0f}
 pre{margin:0;background:#0d1014;border:1px solid var(--bd);border-radius:10px;padding:12px;max-height:320px;overflow:auto;font:12px/1.55 var(--mono);color:#cfd6de}
@@ -94,245 +92,469 @@ pre{margin:0;background:#0d1014;border:1px solid var(--bd);border-radius:10px;pa
 .log time{font:12px var(--mono);color:var(--tx3)}
 @keyframes upd{from{background:#1d4a30;border-color:var(--ok)}to{}}
 .file.upd{animation:upd 1.6s ease-out}
-.ver{font:700 11px var(--ui);letter-spacing:.06em;color:var(--tx);background:var(--s4);border-radius:4px;padding:2px 6px}
-.fld{display:flex;flex-direction:column;gap:6px;font:600 12px var(--ui);letter-spacing:.1em;text-transform:uppercase;color:var(--tx3)}
-.fld input,.fld textarea{font:600 18px var(--ui);letter-spacing:0;text-transform:none;color:var(--tx);background:var(--s2);border:1px solid var(--bd2);border-radius:12px;padding:0 14px;min-height:56px;width:100%}
+.ver{font:500 11px var(--ui);letter-spacing:.06em;color:var(--tx);background:var(--s4);border-radius:4px;padding:2px 6px}
+.fld{display:flex;flex-direction:column;gap:6px;font:500 12px var(--ui);letter-spacing:.1em;text-transform:uppercase;color:var(--tx3)}
+.fld input,.fld textarea{font:500 18px var(--ui);letter-spacing:0;text-transform:none;color:var(--tx);background:var(--s2);border:1px solid var(--bd2);border-radius:12px;padding:0 14px;min-height:56px;width:100%}
 .fld textarea{padding:12px 14px;font:500 15px/1.5 var(--mono);min-height:260px;resize:vertical}
 .fld input[type=color]{padding:4px;min-height:56px}
 .tr{display:grid;grid-template-columns:1fr 110px 72px;gap:10px}
 .tcard{border-top:6px solid var(--c)}
 .empty{padding:28px 16px;text-align:center;color:var(--tx2)}
-.empty b{display:block;font:800 26px var(--disp);letter-spacing:.06em;color:var(--tx);margin-bottom:6px}
+.empty b{display:block;font:500 26px var(--disp);letter-spacing:.06em;color:var(--tx);margin-bottom:6px}
 .row2{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-</style>
+.pendline{font:500 13px var(--ui);color:var(--tx2);text-align:center;margin-top:-6px}.pendline.w{color:var(--warn)}
+.rez{display:grid;grid-template-columns:400px minmax(0,1fr);gap:14px;align-items:start}
+@media(max-width:900px){.rez{grid-template-columns:minmax(0,1fr)}}
+.stack{display:flex;flex-direction:column;gap:14px;min-width:0}
+.qi{border:1px solid var(--bd2);border-left:6px solid var(--c);background:var(--s2);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+.qi.cancel{border-style:dashed}
+.qt b{display:block;font:500 26px/1.05 var(--disp);letter-spacing:.04em;text-transform:uppercase}.qt span{font-size:13px;color:var(--tx2)}
+.qb{display:grid;grid-template-columns:2fr 1fr;gap:8px}
+.qb button{min-height:56px;border-radius:12px;border:1px solid var(--bd2);background:var(--s3);font:500 17px var(--ui)}
+.qb .ok{background:var(--ok);border-color:var(--ok);color:#06210f;font-size:19px}
+.gr{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--bd);background:var(--s2);border-radius:12px}
+.gr.on{border-color:var(--brand);background:#2a1211}
+.gr b{display:block;font:500 18px var(--ui)}.gr span{font-size:12.5px;color:var(--tx2)}
+.gr .btn{min-width:130px}
+.onair{white-space:nowrap;font:500 11px var(--ui);letter-spacing:.1em;color:#fff;background:var(--brand);border-radius:4px;padding:2px 6px;margin-left:6px;vertical-align:middle}
+.chipx{border:1px solid var(--bd2);background:var(--s2);border-radius:999px;padding:6px 12px;font:500 13px var(--ui);color:var(--tx2)}
+.urlrow{display:flex;gap:8px}.urlrow input{flex:1;min-width:0;min-height:56px;border-radius:12px;border:1px solid var(--bd2);background:var(--s2);color:var(--tx);padding:0 14px;font:500 14px var(--mono)}
+.urlrow .btn{white-space:nowrap}
+.sw{grid-template-columns:repeat(3,1fr);min-width:min(100%,640px)}
+@media(max-width:900px){.sw{grid-template-columns:1fr 1fr}#swS{display:none}}
+:root{--topH:84px}
+#vB{position:fixed;left:0;right:0;top:var(--topH);bottom:0;background:#08090b;overflow:hidden;z-index:5}
+#wrap{position:absolute;left:0;right:0;top:0;bottom:130px;overflow:hidden}
+#stg{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;outline:1px solid #2a3038}
+.bgc{position:absolute;inset:0;background:repeating-conic-gradient(#1b1f25 0% 25%,#14171c 0% 50%) 0 0/48px 48px}
+#host{position:absolute;left:0;top:0;width:1920px;height:1080px}
+.fbar{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);width:min(1180px,calc(100% - 24px));background:rgba(17,20,25,.94);backdrop-filter:blur(8px);border:1px solid var(--bd2);border-radius:18px;padding:10px 12px;display:flex;flex-direction:column;gap:8px;box-shadow:0 10px 40px rgba(0,0,0,.6)}
+.frow{display:flex;align-items:center;gap:10px}
+.cap{flex:none;width:70px;font:500 11px var(--ui);letter-spacing:.12em;text-transform:uppercase;color:var(--tx3)}
+.fitems{display:flex;gap:8px;flex-wrap:wrap;flex:1;min-width:0}
+.gbtn{min-height:46px;padding:0 16px;border-radius:10px;border:1px solid var(--bd2);background:var(--s3);font:500 17px var(--disp);letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;gap:8px;color:var(--tx)}
+.gbtn.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.gbtn.on::before{content:"";width:9px;height:9px;border-radius:50%;background:#fff}
+.ebtn{display:flex;border-radius:12px;border:2px solid var(--c);background:color-mix(in srgb,var(--c) 28%,#0a0c0f);overflow:hidden}
+.ebtn .ebmain{min-height:46px;padding:5px 14px;text-align:left;border:0;background:none;display:flex;flex-direction:column;justify-content:center}
+.ebmain b{font:500 20px/1 var(--disp);letter-spacing:.06em}.ebmain span{font-size:12px;color:#dfe4ea}
+.ebtn .x{width:44px;border:0;border-left:1px solid rgba(255,255,255,.18);background:rgba(0,0,0,.25);font-size:18px}
+.ebtn.glow{animation:glow 1s ease-in-out infinite;border-color:#fff}
+.ebtn.dim{opacity:.55}
+@keyframes glow{0%,100%{box-shadow:0 0 0 0 transparent;filter:brightness(1)}50%{box-shadow:0 0 26px 6px color-mix(in srgb,var(--c) 75%,transparent);filter:brightness(1.3)}}
+@media(prefers-reduced-motion:reduce){.ebtn.glow{animation:none;box-shadow:0 0 0 4px #fff}}
+.noev{font-size:13px;color:var(--tx3)}
+.clkchip{margin-left:auto;font:500 22px var(--disp);letter-spacing:.06em;color:var(--tx2);white-space:nowrap;display:flex;align-items:center;gap:12px}
+.chipx{border:1px solid var(--bd2);background:var(--s2);border-radius:999px;padding:8px 14px;font:500 13px var(--ui);color:var(--tx2)}
 
+b,strong{font-weight:500}
+.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;background:var(--s2);padding:3px;border-radius:10px}
+.tabs button{min-height:36px;border:0;border-radius:7px;background:none;color:var(--tx2);font:500 13px var(--ui)}
+.tabs button[aria-pressed=true]{background:var(--tx);color:#0a0c0f}
+.pair{display:grid;grid-template-columns:1fr 42px;gap:6px}
+.sbtn.miss{justify-content:center;padding:0;border-color:var(--bd2);background:var(--s2);font:400 18px var(--ui)}
+.er{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--bd);border-left:5px solid var(--c,var(--bd2));border-radius:10px;background:var(--s2)}
+.er.dead{opacity:.45}.er b{display:block;font:500 16px var(--ui)}.er span{font-size:12px;color:var(--tx2)}
+.er button{min-height:40px;padding:0 12px;border-radius:9px;border:1px solid var(--bd2);background:var(--s3);font:500 13px var(--ui);white-space:nowrap}
+.syncchip{font:500 12px var(--ui);color:var(--tx2);border:1px solid var(--bd2);border-radius:999px;padding:5px 11px;display:flex;gap:6px;align-items:center}
+.syncchip i{width:8px;height:8px;border-radius:50%;background:var(--tx3)}.syncchip.ok i{background:var(--ok)}.syncchip.err i{background:var(--brand)}
+.who{margin-left:auto;font-size:12px;color:var(--tx2);white-space:nowrap}
+
+/* ---------- telefon a tablet ---------- */
+button,input,select,textarea{touch-action:manipulation}
+.cols>div{container-type:inline-size}
+.sbtn{min-width:0;padding:6px 10px;gap:8px}
+.sbtn b{min-width:30px}.sbtn span{min-width:0;overflow-wrap:anywhere}
+.pair{grid-template-columns:minmax(0,1fr) 40px}
+.sbtn.miss .mt{display:none}
+@container (max-width:215px){
+ .pair{grid-template-columns:1fr}
+ .sbtn.miss{min-height:34px;gap:6px}.sbtn.miss .mt{display:inline;font:400 13px var(--ui)}
+}
+.undo{height:auto;padding:10px 16px}.undo small{display:block;white-space:normal;line-height:1.25}
+.sheet>div{max-height:88vh;overflow:auto}
+.fld input,.fld textarea{font-size:16px}
+@media(max-width:1099px){#swS{display:none}.sw{grid-template-columns:1fr 1fr;min-width:min(100%,420px)}}
+@media(min-width:1100px){
+ .split #vB{left:440px}
+ .split #vA:not([hidden]),.split #vS:not([hidden]){position:fixed;left:0;top:var(--topH);bottom:0;width:440px;max-width:none;overflow:auto;padding:14px 14px 60px;border-right:1px solid var(--bd);background:var(--bg);margin:0;z-index:6}
+ .split .toast{max-width:400px;left:220px;transform:translate(-50%,20px)}.split .toast.on{transform:translate(-50%,0)}
+}
+@media(max-width:700px){
+ .top .in{gap:8px;padding-block:8px}.brand{font-size:22px}
+ .sw{order:3;width:100%}
+ .tabs button{font-size:12px;padding:0 2px}
+ .bar .tm{padding:8px 10px;gap:8px}.bar .tm b{font-size:36px}.bar .tm span{font-size:15px}.bar .ck{padding:8px 10px}.bar .ck b{font-size:26px}
+ .cap{display:none}
+ .fbar{width:calc(100% - 12px);bottom:6px;padding:8px;gap:6px;border-radius:14px}
+ .fitems{flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}.fitems>*{flex:none}
+ .frow{gap:6px}.clkchip{flex:none}.clkchip .chipx{display:none}.who{display:none}
+ .gbtn{padding:0 12px}.noev{white-space:nowrap}
+ .pl{grid-template-columns:repeat(4,1fr)}
+}
+@media(max-height:520px){.fbar{padding:6px}.gbtn,.ebtn .ebmain{min-height:40px}}
+
+.tabs{grid-template-columns:repeat(4,1fr)}
+.pad3{display:flex;flex-direction:column;gap:8px}
+.r3{display:grid;grid-template-columns:minmax(0,1fr) 76px minmax(0,1fr);gap:8px;align-items:center}
+.r3 .lab{text-align:center;font:400 12px/1.15 var(--ui);color:var(--tx2);overflow-wrap:anywhere}
+.r3 .tn{height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;font:500 19px var(--disp);letter-spacing:.08em;color:#fff}
+.cell{display:grid;gap:4px;min-width:0;grid-template-columns:minmax(0,1fr)}
+.cell.two{grid-template-columns:minmax(0,1fr) 40px}.cell.two.away{grid-template-columns:40px minmax(0,1fr)}
+.zb{min-height:46px;border-radius:10px;border:2px solid var(--c);background:color-mix(in srgb,var(--c) 22%,#0a0c0f);color:var(--tx);font:500 22px var(--disp);display:flex;align-items:center;justify-content:center;gap:6px;min-width:0;padding:0 4px}
+.zb.fill{background:var(--c);min-height:56px;font-size:30px}
+.zb.mi{border-color:var(--bd2);background:var(--s2);font:400 17px var(--ui);color:var(--tx2)}
+.zb:active{transform:scale(.97)}
+.wr{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--bd);border-left:5px solid var(--c);border-radius:10px;background:var(--s2)}
+.wr b{display:block;font:500 15px var(--ui)}.wr span{font-size:12px;color:var(--tx2)}
+.wr .ws{display:flex;gap:6px}.wr button{min-height:38px;padding:0 12px;border-radius:9px;border:1px solid var(--bd2);background:var(--s3);font:500 13px var(--ui);white-space:nowrap}
+.ftabs{display:flex;align-items:center;gap:6px;overflow-x:auto;scrollbar-width:none}
+.ftab{flex:none;min-height:38px;padding:0 14px;border-radius:9px;border:1px solid var(--bd2);background:var(--s3);font:500 15px var(--disp);letter-spacing:.06em;text-transform:uppercase;color:var(--tx);position:relative}
+.ftab[aria-pressed=true]{background:var(--tx);color:#0a0c0f}
+.ftab.pulse::after{content:"";position:absolute;top:4px;right:4px;width:9px;height:9px;border-radius:50%;background:var(--brand);animation:glow 1s ease-in-out infinite}
+.fsp{flex:1}
+.fpad{display:flex;flex-direction:column;gap:6px}
+.trow{display:flex;gap:6px;align-items:stretch}
+.tchip{flex:none;width:52px;border-radius:9px;display:flex;align-items:center;justify-content:center;font:500 17px var(--disp);letter-spacing:.06em;color:#fff}
+.tbs{display:flex;gap:6px;flex:1;min-width:0;overflow-x:auto;padding:8px 4px 2px;margin:-6px -4px -2px;scrollbar-width:none}
+.pb{position:relative;flex:1 0 76px;min-height:48px;padding:2px 8px;border-radius:10px;border:2px solid var(--c);background:color-mix(in srgb,var(--c) 22%,#0a0c0f);color:var(--tx);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.05;user-select:none;-webkit-user-select:none}
+.pb b{font:500 17px var(--disp);letter-spacing:.04em}.pb span.s{font-size:11px;color:#dfe4ea;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pb.lit{animation:glow 1s ease-in-out infinite;border-color:#fff;background:color-mix(in srgb,var(--c) 55%,#0a0c0f)}
+.pb .x{position:absolute;top:-8px;right:-6px;width:22px;height:22px;border-radius:50%;background:#0a0c0f;border:1px solid #fff;font-size:11px;display:flex;align-items:center;justify-content:center}
+.pb .n{position:absolute;top:-8px;left:-6px;min-width:20px;height:20px;border-radius:10px;background:#fff;color:#000;font:500 12px/20px var(--ui);text-align:center;padding:0 4px}
+.ctl{flex:none;min-height:38px;padding:0 12px;border-radius:9px;border:1px solid var(--bd2);background:var(--s3);font:500 15px var(--disp);letter-spacing:.06em;color:var(--tx);white-space:nowrap}
+.ctl.lit{animation:glow 1s ease-in-out infinite;border-color:#fff}
+.gwrap{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+@media(max-width:700px){.r3{grid-template-columns:minmax(0,1fr) 66px minmax(0,1fr);gap:6px}.tabs button{font-size:12px}.ftab{padding:0 10px}.pb{flex-basis:70px}.tchip{width:44px}}
+</style>
 <div class="top"><div class="in pad">
   <div class="brand">RUPRA <em>GAMA</em></div>
+  <span class="syncchip" id="sync"><i></i><span id="synct">Lokálně</span></span>
   <div class="sw" role="group" aria-label="Strana">
     <button type="button" id="swA" aria-pressed="true"><span>Zapisovatel<small>zadává data</small></span></button>
-    <button type="button" id="swB" aria-pressed="false"><span>Příjemce<small>dostává HTML živě</small></span><span class="badge" id="bdg" hidden>0</span></button>
+    <button type="button" id="swB" aria-pressed="false"><span>Režie<small>schvaluje a vysílá</small></span><span class="badge" id="bdg" hidden>0</span></button>
+    <button type="button" id="swS" aria-pressed="false"><span>Vedle sebe<small>ukázka propojení</small></span></button>
   </div>
 </div></div>
 
 <main class="view pad">
- <!-- Příprava zápasu -->
  <div class="phone" id="vS">
   <div class="card"><div class="hd"><span>Příprava zápasu</span><span>krok 1 ze 2</span></div>
-   <div class="note">Zadej oba týmy a soupisky. Jeden hráč na řádek: číslo a příjmení. Prvních 15 řádků je základní sestava, ostatní jsou náhradníci.</div></div>
-  <div id="setupForm" style="display:flex;flex-direction:column;gap:14px"></div>
+   <div class="note">Zadej oba týmy a soupisky. Jeden hráč na řádek: číslo a příjmení. Prvních 15 řádků je základní sestava, ostatní jsou náhradníci. Příprava před zápasem jde na výstup rovnou, schvaluje se až zápis zápasu.</div></div>
+  <div id="setupForm" style="display:flex;flex-direction:column;gap:12px"></div>
   <button class="big go" id="startMatch" type="button">Začít zápas</button>
  </div>
 
- <!-- Strana 1: zapisovatel -->
  <div class="phone" id="vA" hidden>
   <div class="bar">
     <div class="tm"><span id="hs">DRA</span><b id="hsc">0</b></div>
     <div class="ck"><b id="clk">00:00</b><i id="per">1. poločas</i></div>
     <div class="tm"><span id="as">VLK</span><b id="asc">0</b></div>
   </div>
+  <div class="pendline" id="pend"></div>
   <div class="card">
-    <div class="hd"><span>Body</span><button class="chip" id="askp" type="button"></button></div>
-    <div class="cols" id="scoreCols"></div>
+    <div class="tabs" id="tabs" role="group" aria-label="Typ zápisu"></div>
+    <div class="hd" id="tabhd"></div>
+    <div id="tabc"></div>
   </div>
+  <div class="card" id="waitCard" hidden><div class="hd"><span>Čeká na režii</span></div><div id="waitList" style="display:flex;flex-direction:column;gap:8px"></div></div>
   <div class="card">
     <div class="hd"><span>Čas</span><span id="perl"></span></div>
     <button class="big" id="clkbtn" type="button"></button>
+    <div class="note">Start a stop času jdou na výstup rovnou. Všechno ostatní čeká na schválení režie.</div>
     <button class="ghost" id="perbtn" type="button"></button>
   </div>
-  <div class="card">
-    <div class="hd"><span>Karty</span></div>
-    <div class="cols"><button class="sbtn" style="--c:var(--home)" data-card="home" type="button"><b style="color:var(--yel)">▮</b><span>Žlutá karta<br>DRA</span></button><button class="sbtn" style="--c:var(--away)" data-card="away" type="button"><b style="color:var(--yel)">▮</b><span>Žlutá karta<br>VLK</span></button></div>
-  </div>
-  <button class="undo" id="undo" type="button"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg><span><b>Zpět</b><small id="undot">Nic k vrácení</small></span></button>
   <button class="ghost" id="editSetup" type="button">⚙ Týmy a soupiska</button>
-  <div class="note">Všechno, co zapíšeš, se hned propíše příjemci: grafiky se samy přegenerují a změna se objeví v jeho zápisu událostí.</div>
  </div>
 
- <!-- Strana 2: příjemce -->
- <div class="rcv" id="vB" hidden>
-  <div class="card">
-    <div class="hd"><span>Živé soubory</span><span id="cnt"></span></div>
-    <div class="inbox" id="inbox"></div>
-    <div class="hd" style="margin-top:6px"><span>Zápis událostí</span><span class="live">● živě</span></div>
-    <ul class="log" id="log"></ul>
+ <div id="vB" hidden>
+  <div id="wrap"><div id="stg"><div class="bgc"></div><div id="host"></div></div></div>
+  <div class="fbar" id="fbar">
+   <div class="ftabs" id="ftabs"></div>
+   <div class="fpad" id="fpad"></div>
   </div>
-  <div class="card" id="detail"></div>
  </div>
 </main>
 
 <div class="sheet" id="sheet" hidden><div><h3 id="sheett"></h3><div class="pl" id="pl"></div><button class="ghost" id="nop" type="button">Bez hráče</button><button class="ghost" id="cancel" type="button">Zrušit</button></div></div>
 <div class="toast" id="toast" role="status"></div>
-
 <script>
 const $=s=>document.querySelector(s),esc=v=>String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-/* ================= data zápasu (jen v paměti stránky) ================= */
+/* ============ model zápasu ============ */
 const T={home:{name:'RC Kamenní Draci',short:'DRA',color:'#e0312b'},away:{name:'RK Lesní Vlci',short:'VLK',color:'#13a8c4'}};
 const ROSTER0={home:['Novák','Dvořák','Král','Beneš','Marek','Pokorný','Horák','Jelínek','Fiala','Sedláček','Zeman','Kolář','Navrátil','Čermák','Urban'],
  away:['Svoboda','Černý','Procházka','Veselý','Blažek','Doležal','Kučera','Němec','Růžička','Šebesta','Vlček','Kadlec','Tichý','Polák','Havlík']};
 const BENCH={home:['Holub','Straka','Bartoš','Vávra','Matoušek','Kříž','Doubek','Soukup'],away:['Hrubý','Pospíšil','Konečný','Mach','Sýkora','Jirák','Burian','Lukáš']};
 const RT={};['home','away'].forEach(k=>RT[k]=[...ROSTER0[k],...BENCH[k]].map((n,i)=>(i+1)+' '+n).join('\n'));
 function roster(side){return RT[side].split('\n').map(l=>l.trim()).filter(Boolean).map((l,i)=>{const m=l.match(/^(\d+)\s+(.+)$/);return m?{n:+m[1],name:m[2],bench:i>=15}:{n:i+1,name:l,bench:i>=15}})}
-const KINDS={try:{pts:5,label:'Položení',stat:'Položení'},conv:{pts:2,label:'Proměněný kop',stat:'Proměněné kopy'},pen:{pts:3,label:'Trestný kop',stat:'Trestné kopy'},drop:{pts:3,label:'Drop goal',stat:'Drop goaly'},ptry:{pts:7,label:'Trestné položení',stat:'Trestná položení'},yellow:{pts:0,label:'Žlutá karta',stat:'Žluté karty'}};
-const M={clockMs:0,t0:0,running:false,period:'Před zápasem',events:[],askPlayer:true};
-let undo=[],pending=null,unseen=0,sel=-1;
-const score=s=>M.events.filter(e=>e.side===s).reduce((a,e)=>a+KINDS[e.kind].pts,0);
+/* všechno, co zápas může mít: body, disciplína, střídání, ostatní */
+const KINDS={
+ try:{pts:5,label:'Položení',short:'TRY',b:'TRY'},
+ conv:{pts:2,label:'Proměněný kop',short:'KOP ✓',b:'KOP ✓'},convx:{pts:0,label:'Neproměněný kop',short:'KOP ✗',b:'KOP ✗'},
+ pen:{pts:3,label:'Trestný kop',short:'TRESTNÝ KOP',b:'TK ✓'},penx:{pts:0,label:'Neproměněný trestný kop',short:'TK ✗',b:'TK ✗'},
+ drop:{pts:3,label:'Drop goal',short:'DROP GOAL',b:'DROP ✓'},dropx:{pts:0,label:'Neúspěšný drop goal',short:'DROP ✗',b:'DROP ✗'},
+ ptry:{pts:7,label:'Trestné položení',short:'TRESTNÉ TRY',b:'TRESTNÉ'},
+ yellow:{pts:0,label:'Žlutá karta',short:'ŽLUTÁ',b:'ŽLUTÁ'},red:{pts:0,label:'Červená karta',short:'ČERVENÁ',b:'ČERVENÁ'},
+ sub:{pts:0,label:'Střídání',short:'STŘÍDÁNÍ',b:'STŘÍDÁNÍ',two:1},blood:{pts:0,label:'Krvavé střídání',short:'KRVAVÉ',b:'KRVAVÉ',two:1},hia:{pts:0,label:'HIA střídání',short:'HIA',b:'HIA',two:1},
+ inj:{pts:0,label:'Zranění / přerušení',short:'ZRANĚNÍ',b:'ZRANĚNÍ'},
+ foul:{pts:0,label:'Penalta',short:'PENALTA',b:'PENALTA',noP:1},scrum:{pts:0,label:'Mlýn',short:'MLÝN',b:'MLÝN',noP:1},lineout:{pts:0,label:'Aut',short:'AUT',b:'AUT',noP:1},tmo:{pts:0,label:'TMO review',short:'TMO',b:'TMO',noP:1}};
+const hms=()=>new Date().toTimeString().slice(0,8);
+const M={clockMs:0,t0:0,running:false,period:'Před zápasem',askPlayer:true};
+const OUT={period:'1. poločas',on:{scorebug:true,intro:false,rosterHome:false,rosterAway:false,scorers:false,halftime:false,fulltime:false},strip:null};
 const now=()=>M.clockMs+(M.running?Date.now()-M.t0:0);
 const fmt=ms=>{const s=Math.floor(ms/1000);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
-const snap=()=>JSON.stringify({c:M.clockMs,r:M.running,t:M.t0,p:M.period,e:M.events});
-function commit(side,kind,pl){undo.push(snap());M.events.push({min:Math.floor(now()/60000)+1,side,kind,pl});const K=KINDS[kind];note(`${T[side].short} ${K.pts?'+'+K.pts+' ':''}${K.label}${pl?' – '+pl:''}`,side);render()}
-/* ================= generátor souborů (stejný kód pro náhled i export) ================= */
+/* zápisy: pending = čeká na režii (svítí tlačítko), approved = poslané na výstup, rejected/withdrawn = mimo */
+let entries=[],pick=null,inSetup=true,mode='A',tab='body',rtab='body';
+const who=e=>KINDS[e.kind].two?`${e.pl} → ${e.pl2}`:(e.pl||'');
+const zEv=()=>entries.filter(e=>e.type==='event'&&(e.state==='pending'||e.state==='approved'));
+const oEv=()=>entries.filter(e=>e.type==='event'&&e.state==='approved');
+const sc=(l,s)=>l.filter(e=>e.side===s).reduce((a,e)=>a+KINDS[e.kind].pts,0);
+const waiting=()=>entries.filter(e=>e.state==='pending');
+const pendOf=(side,kind)=>entries.filter(e=>e.type==='event'&&e.state==='pending'&&e.side===side&&e.kind===kind).sort((a,b)=>(a.ts||0)-(b.ts||0));
+const desc=e=>e.type==='period'?'část zápasu: '+e.label:`${KINDS[e.kind].label}${KINDS[e.kind].pts?' +'+KINDS[e.kind].pts:''} · ${T[e.side].short}${who(e)?' · '+who(e):''} · ${e.min}'`;
 const BASE=`.rp{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:'Barlow Condensed','Arial Narrow',Impact,sans-serif;color:#fff;text-transform:uppercase}
 .rp *{box-sizing:border-box}
 @keyframes rp-in{from{opacity:0;transform:translateX(-60px)}to{opacity:1;transform:none}}
-@keyframes rp-up{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
-@keyframes rp-fade{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}`;
+@keyframes rp-fade{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+.still .sb{animation:none}`;
 function build(type,D){
  const H=D.T.home,A=D.T.away;
- if(type==='skore')return{file:'rupra-skore',css:BASE+`
+ if(type==='skore')return{css:`
 .sb{position:absolute;left:96px;top:54px;display:flex;height:64px;animation:rp-in .6s cubic-bezier(.2,.8,.2,1) both}
-.sb>div{display:flex;align-items:center;background:rgba(20,22,26,.94);font-weight:700;font-size:38px;letter-spacing:.04em}
+.sb>div{display:flex;align-items:center;background:rgba(20,22,26,.94);font-weight:500;font-size:38px;letter-spacing:.04em}
 .sb .t{padding:0 22px;min-width:130px;justify-content:center;border-left:10px solid var(--c)}
-.sb .s{width:80px;justify-content:center;background:rgba(44,48,56,.96);font-size:46px;font-weight:800}
+.sb .s{width:80px;justify-content:center;background:rgba(44,48,56,.96);font-size:46px;font-weight:500}
 .sb .clk{margin-left:8px;padding:0 42px 0 26px;gap:14px;font-size:44px;clip-path:polygon(0 0,100% 0,92% 100%,0 100%)}
-.sb .clk small{font-size:20px;color:#aab2bd;font-weight:600;letter-spacing:.1em}`,
+.sb .clk small{font-size:20px;color:#aab2bd;font-weight:500;letter-spacing:.1em}`,
  body:`<div class="sb"><div class="t" style="--c:${esc(H.color)}">${esc(H.short)}</div><div class="s">${D.hs}</div><div class="s">${D.as}</div><div class="t" style="--c:${esc(A.color)};border-left:0;border-right:10px solid ${esc(A.color)}">${esc(A.short)}</div><div class="clk">${esc(D.clock)}<small>${esc(D.period)}</small></div></div>`};
- if(type==='statistiky'){
-  const rows=Object.entries(KINDS).filter(([k])=>k!=='conv'||true).map(([k,v])=>{const h=D.cnt.home[k]||0,a=D.cnt.away[k]||0,t=h+a||1,p=Math.round(100*h/t);
-   return `<div class="r"><b>${h}</b><div class="mid"><span>${esc(v.stat)}</span><i><u style="width:${a+h?p:50}%;background:${esc(H.color)}"></u><u style="width:${a+h?100-p:50}%;background:${esc(A.color)}"></u></i></div><b>${a}</b></div>`}).join('');
-  return{file:'rupra-statistiky',css:BASE+`
-.st{position:absolute;left:50%;bottom:90px;width:1000px;margin-left:-500px;background:rgba(14,16,20,.94);padding:22px 36px 26px;animation:rp-up .6s cubic-bezier(.2,.8,.2,1) both}
-.st .h{display:flex;justify-content:space-between;font-size:54px;font-weight:800;margin-bottom:12px}
-.st .h span:first-child{border-bottom:8px solid var(--a)}.st .h span:last-child{border-bottom:8px solid var(--b)}
-.st .r{display:grid;grid-template-columns:90px 1fr 90px;align-items:center;font-size:40px;margin-top:10px}
-.st .r b{font-weight:800}.st .r b:last-child{text-align:right}
-.st .mid{text-align:center;font-size:26px;letter-spacing:.14em;color:#c3cad4;font-weight:600}
-.st .mid i{display:flex;height:8px;margin-top:4px;gap:4px}.st .mid u{display:block}`,
-  body:`<div class="st" style="--a:${esc(H.color)};--b:${esc(A.color)}"><div class="h"><span>${esc(H.short)}</span><span>${esc(A.short)}</span></div>${rows}</div>`};
- }
-if(type==='soupiska'){
-  const col=(side,tm)=>{const r=D.R[side],st=r.filter(x=>!x.bench),bn=r.filter(x=>x.bench);return `<div style="--c:${esc(tm.color)}"><div class="t">${esc(tm.name)}</div><ul>${st.map(x=>`<li><b>${x.n}</b>${esc(x.name)}</li>`).join('')}</ul>${bn.length?`<div class="bn"><span>Náhradníci</span>${bn.map(x=>`<i>${x.n} ${esc(x.name)}</i>`).join('')}</div>`:''}</div>`};
-  return{file:'rupra-soupiska',css:BASE+`
-.lu{position:absolute;left:50%;top:50%;width:1500px;margin-left:-750px;margin-top:-430px;display:grid;grid-template-columns:1fr 1fr;background:rgba(14,16,20,.95);animation:rp-fade .7s cubic-bezier(.2,.8,.2,1) both}
-.lu>div{padding:28px 44px}.lu .t{font-size:58px;font-weight:800;line-height:1;padding-bottom:10px;border-bottom:8px solid var(--c);margin-bottom:12px}
-.lu ul{list-style:none;margin:0;padding:0;font-size:32px;font-weight:600;display:grid;grid-template-columns:1fr 1fr;gap:2px 28px}
-.lu li{display:flex;gap:14px;align-items:baseline;white-space:nowrap}.lu li b{min-width:40px;font-weight:800;color:var(--c);filter:brightness(1.4)}
-.lu .bn{margin-top:14px;display:flex;flex-wrap:wrap;gap:4px 18px;font-size:24px;color:#c3cad4;font-weight:600}.lu .bn span{width:100%;letter-spacing:.14em;color:#8b95a3;font-size:20px}.lu .bn i{font-style:normal}`,
-  body:`<div class="lu">${col('home',H)}${col('away',A)}</div>`};
- }
+ if(type==='strip'){const s=D.strip;return{css:`
+.ev{position:absolute;left:96px;top:124px;display:flex;height:56px;animation:rp-in .5s cubic-bezier(.2,.8,.2,1) both}
+.ev .tag{padding:0 22px;display:flex;align-items:center;background:var(--c);font-weight:500;font-size:30px;letter-spacing:.08em}
+.ev .tx{display:flex;align-items:center;gap:16px;padding:0 48px 0 26px;background:rgba(244,246,248,.97);color:#10141a;font-weight:500;font-size:34px;clip-path:polygon(0 0,100% 0,96% 100%,0 100%)}
+.ev .tx small{color:#5d6875;font-weight:500;font-size:22px;letter-spacing:.06em}`,
+ body:`<div class="ev" style="--c:${esc(s.color)}"><div class="tag">${esc(s.tag)}</div><div class="tx">${esc(s.who)}<small>${s.min}' · ${esc(s.team)}</small></div></div>`}}
+ if(type==='intro')return{css:`
+.ic{position:absolute;left:50%;top:230px;width:1300px;margin-left:-650px;background:rgba(14,16,20,.94);text-align:center;padding:40px 0 44px;animation:rp-fade .7s cubic-bezier(.2,.8,.2,1) both}
+.ic .c{font-size:30px;letter-spacing:.22em;color:#aab2bd;font-weight:500}
+.ic .m{display:flex;align-items:center;justify-content:center;gap:56px;margin:28px 0}
+.ic .tm{font-size:90px;font-weight:500;line-height:1;padding:0 28px 8px;border-bottom:10px solid var(--c)}
+.ic .vs{font-size:40px;color:#8b95a3}.ic .v{font-size:32px;letter-spacing:.14em;color:#d9dee5;font-weight:500}`,
+ body:`<div class="ic"><div class="c">Ukázková liga ragby 2026</div><div class="m"><div class="tm" style="--c:${esc(H.color)}">${esc(H.name)}</div><div class="vs">VS</div><div class="tm" style="--c:${esc(A.color)}">${esc(A.name)}</div></div><div class="v">Praha · Markéta · výkop 15:00</div></div>`};
+ if(type==='halftime'||type==='fulltime')return{css:`
+.rs{position:absolute;left:50%;top:330px;width:1100px;margin-left:-550px;background:rgba(14,16,20,.94);text-align:center;padding:34px 0 40px;animation:rp-fade .7s cubic-bezier(.2,.8,.2,1) both}
+.rs .l{font-size:34px;letter-spacing:.3em;color:#aab2bd;font-weight:500}
+.rs .r{display:flex;align-items:center;justify-content:center;gap:40px;margin-top:14px;font-size:150px;font-weight:500;line-height:1}
+.rs .r span{font-size:60px;padding-bottom:12px;border-bottom:10px solid var(--c);letter-spacing:.06em}.rs .r i{font-style:normal;color:#8b95a3;font-size:90px}`,
+ body:`<div class="rs"><div class="l">${type==='halftime'?'Poločas':'Konec zápasu'}</div><div class="r"><span style="--c:${esc(H.color)}">${esc(H.short)}</span>${D.hs}<i>:</i>${D.as}<span style="--c:${esc(A.color)}">${esc(A.short)}</span></div></div>`};
+ const col=(side,tm)=>{const r=D.R[side],st=r.filter(x=>!x.bench),bn=r.filter(x=>x.bench);return `<div style="--c:${esc(tm.color)}"><div class="t">${esc(tm.name)}</div><ul>${st.map(x=>`<li><b>${x.n}</b>${esc(x.name)}</li>`).join('')}</ul>${bn.length?`<div class="bn"><span>Náhradníci</span>${bn.map(x=>`<i>${x.n} ${esc(x.name)}</i>`).join('')}</div>`:''}</div>`};
+ const luCss=`
+.lu{position:absolute;left:50%;top:190px;width:1500px;margin-left:-750px;display:grid;grid-template-columns:1fr 1fr;background:rgba(14,16,20,.95);animation:rp-fade .7s cubic-bezier(.2,.8,.2,1) both}
+.lu.one{width:760px;margin-left:-380px;grid-template-columns:1fr}
+.lu>div{padding:22px 40px}.lu .t{font-size:52px;font-weight:500;line-height:1;padding-bottom:8px;border-bottom:8px solid var(--c);margin-bottom:10px}
+.lu ul{list-style:none;margin:0;padding:0;font-size:28px;font-weight:500;display:grid;grid-template-columns:1fr;gap:0}
+.lu:not(.one) ul{grid-template-columns:1fr 1fr;gap:2px 28px}
+.lu li{display:flex;gap:14px;align-items:baseline;white-space:nowrap}.lu li b{min-width:40px;font-weight:500;color:var(--c);filter:brightness(1.4)}
+.lu .bn{margin-top:14px;display:flex;flex-wrap:wrap;gap:4px 18px;font-size:24px;color:#c3cad4;font-weight:500}.lu .bn span{width:100%;letter-spacing:.14em;color:#8b95a3;font-size:20px}.lu .bn i{font-style:normal}`;
+ if(type==='rosterHome')return{css:luCss,body:`<div class="lu one">${col('home',H)}</div>`};
+ if(type==='rosterAway')return{css:luCss,body:`<div class="lu one">${col('away',A)}</div>`};
  const li=side=>{const l=D.events.filter(e=>e.side===side&&KINDS[e.kind].pts>0).map(e=>`<li>${e.min}' ${esc(e.pl||'—')} – ${esc(KINDS[e.kind].label)}</li>`).join('');return l||'<li>zatím nic</li>'};
- return{file:'rupra-strelci',css:BASE+`
+ return{css:`
 .sc{position:absolute;left:50%;top:50%;width:1200px;margin-left:-600px;margin-top:-240px;display:grid;grid-template-columns:1fr 1fr;background:rgba(14,16,20,.94);animation:rp-fade .7s cubic-bezier(.2,.8,.2,1) both}
-.sc>div{padding:32px 40px}.sc .t{font-size:60px;font-weight:800;line-height:1;padding-bottom:10px;border-bottom:8px solid var(--c)}
-.sc ul{list-style:none;margin:16px 0 0;padding:0;font-size:38px;font-weight:600;display:flex;flex-direction:column;gap:8px}`,
+.sc>div{padding:32px 40px}.sc .t{font-size:60px;font-weight:500;line-height:1;padding-bottom:10px;border-bottom:8px solid var(--c)}
+.sc ul{list-style:none;margin:16px 0 0;padding:0;font-size:38px;font-weight:500;display:flex;flex-direction:column;gap:8px}`,
  body:`<div class="sc"><div style="--c:${esc(H.color)}"><div class="t">${esc(H.name)} ${D.hs}</div><ul>${li('home')}</ul></div><div style="--c:${esc(A.color)}"><div class="t">${esc(A.name)} ${D.as}</div><ul>${li('away')}</ul></div></div>`};
 }
-const full=(g,file)=>`<!doctype html>
-<html lang="cs"><head><meta charset="utf-8">
-<title>Rupra – ${file}</title>
-<style>
-html,body{margin:0;padding:0;background:transparent;overflow:hidden}
-${g.css}
-</style></head>
-<body><div class="rp">
-${g.body}
-</div></body></html>
-`;
-function dataNow(){const cnt={home:{},away:{}};M.events.forEach(e=>cnt[e.side][e.kind]=(cnt[e.side][e.kind]||0)+1);
- return{T,R:{home:roster('home'),away:roster('away')},hs:score('home'),as:score('away'),clock:fmt(now()),period:M.period,cnt,events:JSON.parse(JSON.stringify(M.events))}}
-const hms=()=>new Date().toTimeString().slice(0,8);
-const files=['soupiska','skore','statistiky','strelci'].map(type=>({type,ver:0}));
-const log=[];
-function note(text,side){log.unshift({t:hms(),text,side});if(log.length>40)log.pop()}
-/* po každém zápisu se všechny tři soubory přegenerují a propíšou příjemci */
-function syncFiles(){
- const D=dataNow(),t=hms();
- files.forEach(f=>{const g=build(f.type,D);f.ver++;f.file=g.file+'.html';f.css=g.css;f.body=g.body;f.html=full(g,f.file);f.size=new Blob([f.html]).size;f.time=t;f.upd=true;f.sum=`${D.T.home.short} ${D.hs}:${D.as} ${D.T.away.short} · ${D.clock}`});
- if(!$('#vB').hidden)renderB();else{unseen++;renderBadge()}
-}
-/* ================= Strana 1: zapisovatel ================= */
-function renderScore(){
- const mk=(side,c)=>`<div><div class="tname" style="background:${c}">${T[side].short}</div>
-  <button class="sbtn main" style="--c:${c}" data-s="${side}:try" type="button"><b>+5</b><span>Položení</span></button>
-  ${['conv','pen','drop','ptry'].map(k=>`<button class="sbtn" style="--c:${c}" data-s="${side}:${k}" type="button"><b>+${KINDS[k].pts}</b><span>${KINDS[k].label}</span></button>`).join('')}</div>`;
- $('#scoreCols').innerHTML=mk('home',T.home.color)+mk('away',T.away.color);
-}
+function outData(){const ev=oEv();return{T,R:{home:roster('home'),away:roster('away')},hs:sc(ev,'home'),as:sc(ev,'away'),clock:fmt(now()),period:OUT.period,events:ev}}
+/* ============ výstup (shadow DOM) ============ */
+const host=$('#host'),root=host.attachShadow({mode:'open'});
+let cache=['','',''];
+function initOut(){const D=outData();D.strip={side:'home',color:'#fff',tag:'',who:'',min:0,team:''};
+ const css=BASE+['skore','strip','intro','halftime','rosterHome','strelci'].map(t=>build(t,D).css).join('');
+ root.innerHTML=`<style>${css}</style><div class="rp"><div id="s1"></div><div id="s2"></div><div id="s3"></div></div>`}
+function setSlot(i,html){if(cache[i]===html)return;const el=root.getElementById('s'+(i+1));
+ if(i===0){el.classList.toggle('still',!!cache[0]&&!!html)}
+ el.innerHTML=html;cache[i]=html}
+function outputRender(){const D=outData();
+ setSlot(0,OUT.on.scorebug?build('skore',D).body:'');
+ setSlot(1,OUT.strip?build('strip',{...D,strip:OUT.strip}).body:'');
+ const c=CENTER.find(k=>OUT.on[k]);
+ setSlot(2,c?build(c==='scorers'?'strelci':c,D).body:'')}
+const CENTER=['intro','rosterHome','rosterAway','scorers','halftime','fulltime'];
+/* ============ synchronizace mezi zařízeními (db capability) ============ */
+let DB=null,UID=null,ME=null,U=null;const NAMES={};
+function setSync(k,t){const c=$('#sync');c.className='syncchip '+(k||'');$('#synct').textContent=t}
+const dbErr=e=>{setSync('err','Chyba synchronizace');console.warn('db',e&&e.code,e&&e.message)};
+const clean=o=>JSON.parse(JSON.stringify(o));
+const newId=()=>'e'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+function putEntry(e){entries.push(e);if(DB)DB.doc('entries/'+e.id).set(clean(e)).catch(dbErr)}
+function patchEntry(id,patch){const e=entries.find(x=>x.id===id);if(!e)return;Object.assign(e,patch);if(DB)DB.doc('entries/'+id).update(clean(patch)).catch(dbErr)}
+function mkEntry(o){return{id:newId(),ts:Date.now(),t:hms(),by:UID,...o}}
+let saving=false,dirty={state:false,out:false},timers={};
+function queueSave(kind,delay=0){clearTimeout(timers[kind]);timers[kind]=setTimeout(()=>flush(kind),delay)}
+async function flush(kind){if(!DB)return;if(saving){dirty[kind]=true;return}saving=true;
+ try{if(kind==='state')await DB.doc('match/state').set(clean({home:T.home,away:T.away,rt:RT,clockMs:M.clockMs,running:M.running,t0:M.t0,period:M.period,by:UID,at:Date.now()}));
+  else await DB.doc('match/out').set(clean({on:OUT.on,period:OUT.period,strip:OUT.strip,by:UID,at:Date.now()}))}catch(e){dbErr(e)}
+ saving=false;for(const k of['state','out'])if(dirty[k]){dirty[k]=false;flush(k);break}}
+let stateBy=null,gotAny=false;
+function applyState(d){if(document.activeElement&&document.activeElement.closest&&document.activeElement.closest('#setupForm'))return;   // nepřepisovat text, který právě píšeš
+ if(!gotAny){gotAny=true;if(d.period&&d.period!=='Před zápasem'){inSetup=false;applyViews()}}
+ if(d.home)Object.assign(T.home,d.home);if(d.away)Object.assign(T.away,d.away);if(d.rt){RT.home=d.rt.home;RT.away=d.rt.away}
+ M.clockMs=d.clockMs??0;M.running=!!d.running;M.t0=d.t0||0;M.period=d.period||M.period;stateBy=d.by||null;applyTeams();renderScoreCols()}
+async function initDb(){
+ try{DB=window.claude?.use?await window.claude.use('db'):null}catch{DB=null}
+ if(!DB){seedLocal();setSync('','Lokálně (bez synchronizace)');refresh();return}
+ try{U=await window.claude.use('user');if(U){ME=await U.me();UID=ME.id}}catch{}
+ setSync('ok','Sdíleno'+(ME&&ME.name?' · '+ME.name:''));
+ const t=setTimeout(()=>setSync('err','Spojení se nedaří'),10000);
+ const first=()=>{clearTimeout(t);setSync('ok','Sdíleno'+(ME&&ME.name?' · '+ME.name:''))};
+ DB.collection('entries').onSnapshot(s=>{if(!s.metadata.fromCache)first();entries=s.docs.map(d=>({...d.data(),id:d.id})).sort((a,b)=>(a.ts||0)-(b.ts||0));refresh()},dbErr);
+ DB.doc('match/state').onSnapshot(s=>{if(s.exists)applyState(s.data());refresh()},dbErr);
+ DB.doc('match/out').onSnapshot(s=>{if(s.exists){const d=s.data();Object.assign(OUT.on,d.on||{});OUT.period=d.period||OUT.period;OUT.strip=d.strip||null}refresh()},dbErr)}
+function seedLocal(){[['home','try','Novák',4],['home','conv','Dvořák',5],['away','pen','Svoboda',9],['away','yellow','Doležal',15],['home','try','Fiala',17],['away','try','Černý',22]].forEach(([side,kind,pl,min],i)=>entries.push({id:'s'+i,ts:i,type:'event',side,kind,pl,pl2:'',min,state:'approved',t:'—'}));
+ M.period='1. poločas';OUT.period='1. poločas';M.clockMs=23*60000+41000}
+async function nameOf(id){if(!id)return '';if(NAMES[id]!==undefined)return NAMES[id];NAMES[id]='';try{if(U){const p=await U.profiles([id]);NAMES[id]=p[id].name||''}}catch{}return NAMES[id]}
+/* ============ Zapisovatel: symetrický pad ============ */
+const TABS=[['body','Body'],['karty','Karty'],['stridani','Střídání'],['ostatni','Ostatní']];
+const ROWS={body:[['try','Try'],['conv','Konverze','convx'],['pen','Trestný kop','penx'],['drop','Drop goal','dropx'],['ptry','Trestné try']],
+ karty:[['yellow','Žlutá'],['red','Červená']],stridani:[['sub','Střídání'],['blood','Krvavé'],['hia','HIA']],
+ ostatni:[['foul','Penalta'],['scrum','Mlýn'],['lineout','Aut'],['inj','Zranění'],['tmo','TMO']]};
+const GLYPH={yellow:'<span style="color:var(--yel)">▮</span>',red:'<span style="color:#e8262c">▮</span>',sub:'⇄',blood:'<span style="color:#e8262c">✚</span>',hia:'⚕'};
+const zlabel=k=>KINDS[k].pts?'+'+KINDS[k].pts:(GLYPH[k]||'＋');
+function zcell(side,k,kx){const c=T[side].color,main=`<button class="zb ${k==='try'?'fill':''}" style="--c:${c}" data-s="${side}:${k}" type="button" aria-label="${esc(T[side].short+' '+KINDS[k].label)}">${zlabel(k)}</button>`;
+ if(!kx)return `<div class="cell">${main}</div>`;
+ const mi=`<button class="zb mi" style="--c:${c}" data-s="${side}:${kx}" type="button" aria-label="${esc(T[side].short+' '+KINDS[kx].label)}">✗</button>`;
+ return side==='home'?`<div class="cell two">${main}${mi}</div>`:`<div class="cell two away">${mi}${main}</div>`}
+let sig='';
+function renderScoreCols(){
+ const k=tab+'|'+JSON.stringify(T)+'|'+M.askPlayer;
+ if(k===sig)return;sig=k;
+ $('#tabs').innerHTML=TABS.map(([id,n])=>`<button type="button" data-tab="${id}" aria-pressed="${id===tab}">${n}</button>`).join('');
+ $('#tabhd').innerHTML=`<span>${TABS.find(t=>t[0]===tab)[1]}</span>${tab==='body'?`<button class="chip" id="askp" type="button">Výběr hráče: ${M.askPlayer?'ANO':'NE'}</button>`:''}`;
+ $('#tabc').innerHTML=`<div class="pad3"><div class="r3"><div class="tn" style="background:${T.home.color}">${esc(T.home.short)}</div><div></div><div class="tn" style="background:${T.away.color}">${esc(T.away.short)}</div></div>`+
+  ROWS[tab].map(([k,l,kx])=>`<div class="r3">${zcell('home',k,kx)}<div class="lab">${l}</div>${zcell('away',k,kx)}</div>`).join('')+'</div>'}
+function renderWait(){const w=waiting();$('#waitCard').hidden=!w.length;
+ $('#waitList').innerHTML=w.map(e=>{const c=e.type==='period'?'var(--bd2)':T[e.side].color;
+  return `<div class="wr" style="--c:${c}"><div><b>${esc(e.type==='period'?'Část zápasu':KINDS[e.kind].label+(KINDS[e.kind].pts?' +'+KINDS[e.kind].pts:''))}</b><span>${esc(e.type==='period'?e.label:T[e.side].short+(who(e)?' · '+who(e):'')+' · '+e.min+"'")}</span></div>
+  <div class="ws">${e.type!=='period'&&!KINDS[e.kind].noP?`<button data-wch="${e.id}" type="button">Změnit hráče</button>`:''}<button data-wx="${e.id}" type="button" aria-label="Stáhnout">✕</button></div></div>`}).join('')}
 function render(){
- $('#hsc').textContent=score('home');$('#asc').textContent=score('away');$('#clk').textContent=fmt(now());$('#per').textContent=M.period;$('#perl').textContent=M.period;
- $('#askp').textContent='Výběr hráče: '+(M.askPlayer?'ANO':'NE');
+ const z=zEv(),w=waiting().length;
+ $('#hsc').textContent=sc(z,'home');$('#asc').textContent=sc(z,'away');$('#clk').textContent=fmt(now());$('#per').textContent=M.period;$('#perl').textContent=M.period;
+ const p=$('#pend');p.textContent=w?`⏳ ${w} čeká na schválení režií`:'✓ vše schváleno';p.className='pendline'+(w?' w':'');
  const b=$('#clkbtn');b.className='big '+(M.running?'stop':'go');b.innerHTML=M.running?'<span>❚❚</span> Stop':'<span>▶</span> '+(M.period==='Před zápasem'?'Výkop':'Start');
- const nx={'Před zápasem':null,'1. poločas':'Konec 1. poločasu','Poločas':'Začátek 2. poločasu','2. poločas':'Konec zápasu','Konec':null}[M.period];
- $('#perbtn').hidden=!nx;$('#perbtn').textContent=nx||'';
- const last=M.events[M.events.length-1];$('#undo').disabled=!undo.length;
- $('#undot').textContent=undo.length&&last?`${last.min}' ${KINDS[last.kind].label} · ${T[last.side].short}`:'Nic k vrácení';
- syncFiles();
-}
+ const nx=NEXT[M.period];$('#perbtn').hidden=!nx;$('#perbtn').textContent=nx||'';
+ const bg=$('#bdg');bg.hidden=!w;bg.textContent=w;
+ renderScoreCols();renderWait()}
+const NEXT={'1. poločas':'Konec 1. poločasu','Poločas':'Začátek 2. poločasu','2. poločas':'Konec zápasu'};
+function refresh(){render();if(!$('#vB').hidden){renderBar();outputRender();layoutB()}}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('on'),2600)}
+/* ============ výběr hráče (zapisovatel, režie nový zápis, změna hráče) ============ */
+function openPick(p){pick=p;const k=KINDS[p.kind];
+ const verb=p.m==='edit'?'Změnit hráče · ':'';
+ $('#sheett').textContent=k.two?`${verb}${k.label} ${T[p.side].short} – ${p.step===2?'kdo naskakuje?':'kdo jde ven?'}`:`${verb}${k.label}${k.pts?' +'+k.pts:''} ${T[p.side].short} – kdo?`;
+ $('#pl').innerHTML=roster(p.side).map(x=>`<button type="button" data-pl="${esc(x.name)}"><b>${x.n}</b><span>${esc(x.name)}</span></button>`).join('');
+ $('#nop').hidden=p.m==='edit'||!!k.two;$('#sheet').hidden=false}
+function closePick(){pick=null;$('#sheet').hidden=true}
+const minNow=()=>Math.floor(now()/60000)+1;
+function commit(side,kind,pl,pl2){const e=mkEntry({type:'event',side,kind,pl:pl||'',pl2:pl2||'',min:minNow(),state:'pending'});putEntry(e);toast('Odesláno režii: '+desc(e));refresh()}
+function createApproved(side,kind,pl,pl2){const e=mkEntry({type:'event',side,kind,pl:pl||'',pl2:pl2||'',min:minNow(),state:'approved'});putEntry(e);OUT.strip=stripOf(e);queueSave('out');refresh()}
+function picked(name){const p=pick;if(!p)return;const k=KINDS[p.kind];
+ if(k.two&&p.step!==2){openPick({...p,step:2,off:name});return}
+ const a=k.two?p.off:name,b=k.two?name:'';closePick();
+ if(p.m==='edit'){patchEntry(p.id,{pl:a,pl2:b});toast('Hráč změněn');refresh()}
+ else if(p.m==='rnew')createApproved(p.side,p.kind,a,b);
+ else commit(p.side,p.kind,a,b)}
+let longFired=false;
+function rezTap(sk){const[side,kind]=sk.split(':'),pe=pendOf(side,kind);
+ if(pe.length)approve(pe[0].id);
+ else if(KINDS[kind].noP)createApproved(side,kind,'');
+ else openPick({side,kind,step:1,m:'rnew'})}
+function rezRight(sk){const[side,kind]=sk.split(':'),pe=pendOf(side,kind);
+ if(KINDS[kind].noP)return;
+ pe.length?openPick({side,kind,step:1,m:'edit',id:pe[0].id}):openPick({side,kind,step:1,m:'rnew'})}
 document.addEventListener('click',e=>{
- const t=e.target.closest('button');if(!t)return;
- if(t.dataset.s){const[side,kind]=t.dataset.s.split(':');
-  if(M.askPlayer){pending={side,kind};$('#sheett').textContent=`+${KINDS[kind].pts} ${KINDS[kind].label} · ${T[side].short} – kdo?`;
-   $('#pl').innerHTML=roster(side).map(x=>`<button type="button" data-pl="${esc(x.name)}"><b>${x.n}</b><span>${esc(x.name)}</span></button>`).join('');$('#sheet').hidden=false}
-  else commit(side,kind,'');}
- else if(t.dataset.pl!==undefined&&pending){commit(pending.side,pending.kind,t.dataset.pl);pending=null;$('#sheet').hidden=true}
- else if(t.dataset.card){commit(t.dataset.card,'yellow','')}
-});
-$('#nop').onclick=()=>{if(pending)commit(pending.side,pending.kind,'');pending=null;$('#sheet').hidden=true};
-$('#cancel').onclick=()=>{pending=null;$('#sheet').hidden=true};
-$('#askp').onclick=()=>{M.askPlayer=!M.askPlayer;render()};
-$('#undo').onclick=()=>{if(!undo.length)return;const s=JSON.parse(undo.pop());note('ZPĚT – poslední akce vrácena');M.clockMs=s.c;M.running=s.r;M.t0=s.t;M.period=s.p;M.events=s.e;render()};
-$('#clkbtn').onclick=()=>{undo.push(snap());if(M.running){M.clockMs=now();M.running=false;note('Čas zastaven '+fmt(M.clockMs))}else{M.t0=Date.now();M.running=true;if(M.period==='Před zápasem')M.period='1. poločas';note('Čas spuštěn '+fmt(M.clockMs))}render()};
-$('#perbtn').onclick=()=>{undo.push(snap());M.clockMs=now();M.running=false;
- const n={'1. poločas':'Poločas','Poločas':'2. poločas','2. poločas':'Konec'}[M.period];
- if(n==='2. poločas'){M.clockMs=Math.max(M.clockMs,40*60000);M.t0=Date.now();M.running=true}M.period=n;note('Část zápasu: '+n);render()};
-setInterval(()=>{if(M.running)$('#clk').textContent=fmt(now())},250);
-/* ================= Příprava zápasu ================= */
-let inSetup=true;
-function applyTeams(){const r=document.documentElement.style;r.setProperty('--home',T.home.color);r.setProperty('--away',T.away.color);
- $('#hs').textContent=T.home.short;$('#as').textContent=T.away.short;
- document.querySelectorAll('[data-card]').forEach(b=>{const k=b.dataset.card;b.style.setProperty('--c',T[k].color);b.querySelector('span').innerHTML='Žlutá karta<br>'+esc(T[k].short)})}
+ if(longFired){longFired=false;return}
+ const t=e.target.closest('button,[data-rj]');if(!t)return;
+ if(t.dataset.tab){tab=t.dataset.tab;sig='';renderScoreCols()}
+ else if(t.dataset.rtab){rtab=t.dataset.rtab;renderBar();layoutB()}
+ else if(t.id==='askp'){M.askPlayer=!M.askPlayer;sig='';renderScoreCols()}
+ else if(t.dataset.s){const[side,kind]=t.dataset.s.split(':'),k=KINDS[kind];
+  if(k.noP||(!k.two&&!M.askPlayer&&!['yellow','red','inj'].includes(kind)))commit(side,kind,'');else openPick({side,kind,step:1,m:'zap'})}
+ else if(t.dataset.pl!==undefined)picked(t.dataset.pl);
+ else if(t.dataset.wch){const en=entries.find(x=>x.id===t.dataset.wch);if(en)openPick({side:en.side,kind:en.kind,step:1,m:'edit',id:en.id})}
+ else if(t.dataset.wx){patchEntry(t.dataset.wx,{state:'withdrawn'});toast('Stáhnuto, režie to neuvidí');refresh()}
+ else if(t.dataset.pk){if(e.target.closest('[data-rj]')){const pe=pendOf(...t.dataset.pk.split(':'));if(pe[0])reject(pe[0].id)}else rezTap(t.dataset.pk)}
+ else if(t.dataset.rj)reject(t.dataset.rj);
+ else if(t.dataset.ap)approve(t.dataset.ap);
+ else if(t.dataset.g)toggleG(t.dataset.g);
+ else if(t.dataset.clk!==undefined)toggleClock();
+ else if(t.dataset.adv!==undefined)advancePeriod();
+ else if(t.dataset.cpu!==undefined)copyUrl(t)});
+document.addEventListener('contextmenu',e=>{const b=e.target.closest('.pb[data-pk]');if(b){e.preventDefault();rezRight(b.dataset.pk)}});
+let lp=null;
+document.addEventListener('pointerdown',e=>{const b=e.target.closest('.pb[data-pk]');if(b&&e.pointerType==='touch'){lp=setTimeout(()=>{longFired=true;rezRight(b.dataset.pk)},450)}});
+['pointerup','pointercancel','pointermove'].forEach(ev=>document.addEventListener(ev,()=>{clearTimeout(lp)}));
+$('#nop').onclick=()=>{const p=pick;closePick();if(p){if(p.m==='rnew')createApproved(p.side,p.kind,'');else commit(p.side,p.kind,'')}};
+$('#cancel').onclick=closePick;
+function toggleClock(){if(M.running){M.clockMs=now();M.running=false;toast('Čas zastaven')}
+ else{M.t0=Date.now();M.running=true;if(M.period==='Před zápasem'){M.period=OUT.period='1. poločas';queueSave('out')}toast('Čas spuštěn')}queueSave('state');refresh()}
+$('#clkbtn').onclick=toggleClock;
+function nextPeriod(){M.clockMs=now();M.running=false;const n={'1. poločas':'Poločas','Poločas':'2. poločas','2. poločas':'Konec'}[M.period];
+ if(n==='2. poločas'){M.clockMs=Math.max(M.clockMs,40*60000);M.t0=Date.now();M.running=true}M.period=n;return n}
+$('#perbtn').onclick=()=>{const n=nextPeriod();putEntry(mkEntry({type:'period',label:n,state:'pending'}));queueSave('state');toast('Změna části zápasu čeká na schválení');refresh()};
+function advancePeriod(){const n=nextPeriod();OUT.period=n;queueSave('state');queueSave('out');refresh()}
+setInterval(()=>{if(M.running)$('#clk').textContent=fmt(now());if(OUT.strip&&Date.now()>OUT.strip.until)OUT.strip=null;if(!$('#vB').hidden){outputRender();const c=$('#fclkb');if(c)c.textContent=(M.running?'❚❚ ':'▶ ')+fmt(now())}},250);
+/* ============ Příprava zápasu ============ */
+function applyTeams(){const r=document.documentElement.style;r.setProperty('--home',T.home.color);r.setProperty('--away',T.away.color);$('#hs').textContent=T.home.short;$('#as').textContent=T.away.short}
 function renderSetup(){
  $('#setupForm').innerHTML=['home','away'].map(k=>`<div class="card tcard" style="--c:${T[k].color}"><div class="hd"><span>${k==='home'?'Domácí':'Hosté'}</span></div>
   <div class="tr"><label class="fld">Název týmu<input data-t="${k}:name" type="text" value="${esc(T[k].name)}"></label><label class="fld">Zkratka<input data-t="${k}:short" type="text" maxlength="4" value="${esc(T[k].short)}"></label><label class="fld">Barva<input data-t="${k}:color" type="color" value="${T[k].color}"></label></div>
-  <label class="fld">Soupiska (číslo a příjmení)<textarea data-r="${k}" spellcheck="false">${esc(RT[k])}</textarea></label></div>`).join('');
-}
+  <label class="fld">Soupiska (číslo a příjmení)<textarea data-r="${k}" spellcheck="false">${esc(RT[k])}</textarea></label></div>`).join('')}
 $('#setupForm').addEventListener('input',e=>{const t=e.target;
  if(t.dataset.t){const[k,f]=t.dataset.t.split(':');T[k][f]=f==='short'?t.value.toUpperCase():t.value;if(f==='color')t.closest('.tcard').style.setProperty('--c',t.value)}
  else if(t.dataset.r)RT[t.dataset.r]=t.value;
- applyTeams();renderScore();render()});
-function goSetup(b){inSetup=b;$('#vS').hidden=!b;$('#vA').hidden=b;if(b)renderSetup()}
-$('#startMatch').onclick=()=>{note('Týmy a soupisky nastaveny: '+T.home.short+' – '+T.away.short);goSetup(false);render();window.scrollTo(0,0)};
+ applyTeams();sig='';queueSave('state',400);refresh()});
+function goSetup(b){inSetup=b;applyViews();if(b)renderSetup();sig=''}
+$('#startMatch').onclick=()=>{goSetup(false);refresh();window.scrollTo(0,0)};
 $('#editSetup').onclick=()=>{goSetup(true);window.scrollTo(0,0)};
-
-/* ================= Strana 2: příjemce ================= */
-let bgGrass=true,showCode=false;
-function renderBadge(){const b=$('#bdg');b.hidden=!unseen;b.textContent=unseen}
-function renderB(){
- $('#cnt').textContent=files.length+' soubory';
- if(sel<0)sel=0;
- $('#inbox').innerHTML=files.map((f,i)=>`<button class="file ${f.upd?'upd':''}" type="button" data-i="${i}" aria-current="${i===sel}"><span class="n">${esc(f.file)}</span><span class="m"><span class="ver">verze ${f.ver}</span><span>${f.time}</span><span>${(f.size/1024).toFixed(1)} kB</span></span><span class="m">${esc(f.sum)}</span></button>`).join('');
- $('#log').innerHTML=log.length?log.map(l=>`<li style="--c:${l.side?T[l.side].color:'var(--bd2)'}"><time>${l.t}</time><span>${esc(l.text)}</span></li>`).join(''):'<li><span></span><span>Zatím nic. Zapiš něco na straně Zapisovatele.</span></li>';
- const d=$('#detail'),f=files[sel];
- d.innerHTML=`<div class="row2"><div><div class="mono">${esc(f.file)} <span class="ver">verze ${f.ver}</span></div><div class="meta">aktualizováno ${f.time} · ${(f.size/1024).toFixed(1)} kB · průhledné pozadí · 1920 × 1080</div></div>
-  <div style="display:flex;gap:8px"><button class="btn" id="bgG" type="button" aria-pressed="${bgGrass}">Trávník</button><button class="btn" id="bgC" type="button" aria-pressed="${!bgGrass}">Průhledné</button></div></div>
-  <div class="stage" id="stg"><div class="bg ${bgGrass?'grass':'check'}"></div><div class="host" id="host"></div></div>
-  <div class="acts"><button class="btn pri" id="cp" type="button">Zkopírovat HTML</button><button class="btn" id="tg" type="button" aria-pressed="${showCode}">${showCode?'Skrýt kód':'Zobrazit kód'}</button></div>
-  <pre id="code" ${showCode?'':'hidden'}></pre>
-  <div class="note">Soubor se přegeneruje po každém zápisu (bod, karta, čas, zpět). Je celý v jednom kuse, bez internetu a bez dalších souborů. Cílový program zatím není vybraný.</div>`;
- $('#code').textContent=f.html;
- const root=$('#host').attachShadow({mode:'open'});root.innerHTML=`<style>${f.css}</style><div class="rp">${f.body}</div>`;
- const fit=()=>{$('#host').style.transform=`scale(${$('#stg').clientWidth/1920})`};fit();new ResizeObserver(fit).observe($('#stg'));
- $('#bgG').onclick=()=>{bgGrass=true;renderB()};$('#bgC').onclick=()=>{bgGrass=false;renderB()};
- $('#tg').onclick=()=>{showCode=!showCode;renderB()};
- $('#cp').onclick=async ev=>{const b=ev.target;try{await navigator.clipboard.writeText(f.html);b.textContent='Zkopírováno ✓'}catch{showCode=true;renderB();const r=document.createRange();r.selectNodeContents($('#code'));getSelection().removeAllRanges();getSelection().addRange(r);return}setTimeout(()=>b.textContent='Zkopírovat HTML',2000)};
- files.forEach(x=>x.upd=false);
-}
-$('#inbox').addEventListener('click',e=>{const b=e.target.closest('.file');if(b){sel=+b.dataset.i;renderB()}});
-function show(b){$('#vS').hidden=b||!inSetup;$('#vA').hidden=b||inSetup;$('#vB').hidden=!b;$('#swA').setAttribute('aria-pressed',!b);$('#swB').setAttribute('aria-pressed',b);
- if(b){unseen=0;renderB();renderBadge()}window.scrollTo(0,0)}
-$('#swA').onclick=()=>show(false);$('#swB').onclick=()=>show(true);
-let tt;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),2600)}
-/* ================= start: rozehraný zápas, aby nebylo nic prázdné ================= */
-M.period='1. poločas';M.clockMs=23*60000+41000;
-[['home','try','Novák'],['home','conv','Dvořák'],['away','pen','Svoboda'],['home','try','Fiala'],['away','try','Černý']].forEach(([s,k,p],i)=>M.events.push({min:[4,5,9,17,22][i],side:s,kind:k,pl:p}));
-M.events.push({min:15,side:'away',kind:'yellow',pl:''});M.events.sort((a,b)=>a.min-b.min);
-renderScore();renderSetup();applyTeams();note('Zápas načten, čas 23:41');render();unseen=0;renderBadge();
+/* ============ Režie: výstup + plovoucí pruh s týmiž tlačítky ============ */
+const stripOf=e=>{const K=KINDS[e.kind];return{color:T[e.side].color,tag:K.short+(K.pts?' +'+K.pts:''),who:K.two?`${e.pl2} za ${e.pl}`:(e.pl||T[e.side].name),min:e.min,team:T[e.side].short,until:Date.now()+6000}};
+function approve(id){const e=entries.find(x=>x.id===id);if(!e||e.state!=='pending')return;
+ patchEntry(id,{state:'approved'});
+ if(e.type==='period')OUT.period=e.label;else OUT.strip=stripOf(e);
+ queueSave('out');refresh()}
+function reject(id){const e=entries.find(x=>x.id===id);if(!e||e.state!=='pending')return;
+ patchEntry(id,{state:'rejected'});if(e.type==='period'){M.period=OUT.period;queueSave('state')}toast('Zamítnuto: '+desc(e));refresh()}
+const gdb=()=>[['scorebug','Scorebug'],['intro','Úvodní karta'],['rosterHome','Soupiska '+T.home.short],['rosterAway','Soupiska '+T.away.short],['scorers','Střelci'],['halftime','Poločas'],['fulltime','Konec zápasu']];
+function toggleG(id){if(id==='scorebug')OUT.on.scorebug=!OUT.on.scorebug;else{const v=!OUT.on[id];CENTER.forEach(k=>OUT.on[k]=false);OUT.on[id]=v}queueSave('out');refresh()}
+const RTABS=[['body','Body'],['karty','Karty'],['stridani','Střídání'],['ostatni','Ostatní'],['graf','Grafiky']];
+const RKINDS={body:['try','conv','convx','pen','penx','drop','dropx','ptry'],karty:['yellow','red'],stridani:['sub','blood','hia'],ostatni:['foul','scrum','lineout','inj','tmo']};
+function copyUrl(b){navigator.clipboard.writeText('https://rupra.example/vystup').then(()=>{b.textContent='Zkopírováno ✓ (zatím zástupná)'}).catch(()=>{b.textContent='https://rupra.example/vystup'});setTimeout(()=>b.textContent='⧉ Adresa pro vMix',2600)}
+function renderBar(){
+ const pend=waiting(),pp=pend.find(e=>e.type==='period');
+ const pulse=id=>id!=='graf'&&RKINDS[id].some(k=>pend.some(e=>e.type==='event'&&e.kind===k));
+ const next=NEXT[OUT.period]||'';
+ $('#ftabs').innerHTML=RTABS.map(([id,n])=>`<button class="ftab ${pulse(id)?'pulse':''}" type="button" data-rtab="${id}" aria-pressed="${id===rtab}">${n}</button>`).join('')+'<span class="fsp"></span>'+
+  (pp?`<button class="ctl lit" type="button" data-ap="${pp.id}">ČÁST: ${esc(pp.label)} ▸ ukázat</button>`:(next?`<button class="ctl" type="button" data-adv>${esc(next)} ▸</button>`:''))+
+  `<button class="ctl" type="button" data-clk id="fclkb">${M.running?'❚❚ ':'▶ '}${fmt(now())}</button>`;
+ let h='';
+ if(rtab==='graf')h=`<div class="gwrap">${gdb().map(([id,n])=>`<button class="gbtn ${OUT.on[id]?'on':''}" data-g="${id}" type="button">${esc(n)}</button>`).join('')}<span class="fsp"></span><button class="chipx" data-cpu type="button">⧉ Adresa pro vMix</button></div>`;
+ else h=['home','away'].map(side=>`<div class="trow"><div class="tchip" style="background:${T[side].color}">${esc(T[side].short)}</div><div class="tbs">`+RKINDS[rtab].map(k=>{
+   const K=KINDS[k],pe=pendOf(side,k),lit=pe.length>0,sub=lit?(who(pe[0])||'—'):(K.pts?'+'+K.pts:'');
+   return `<button class="pb ${lit?'lit':''}" style="--c:${T[side].color}" data-pk="${side}:${k}" type="button" title="${esc(K.label)}${lit?' · klik = na výstup, pravé tlačítko = změnit hráče':' · klik = zapsat a poslat na výstup'}">${pe.length>1?`<span class="n">${pe.length}</span>`:''}${lit?'<span class="x" data-rj="1" aria-label="Zamítnout">✕</span>':''}<b>${K.b}</b><span class="s">${esc(sub)}</span></button>`}).join('')+'</div></div>').join('');
+ $('#fpad').innerHTML=h}
+function layoutB(){if($('#vB').hidden)return;
+ document.documentElement.style.setProperty('--topH',document.querySelector('.top').offsetHeight+'px');
+ const w=$('#wrap');w.style.bottom=($('#fbar').offsetHeight+28)+'px';
+ const W=w.clientWidth,H=w.clientHeight,k=Math.min(W/1920,H/1080)*0.98;
+ $('#stg').style.transform=`translate(${(W-1920*k)/2}px,${(H-1080*k)/2}px) scale(${k})`}
+addEventListener('resize',()=>{if(mode==='S'&&innerWidth<1100)show('A');layoutB()});
+function applyViews(){$('#vS').hidden=mode==='B'||!inSetup;$('#vA').hidden=mode==='B'||inSetup;$('#vB').hidden=mode==='A'}
+function show(m){mode=m;document.body.classList.toggle('split',m==='S');
+ $('#swA').setAttribute('aria-pressed',m==='A');$('#swB').setAttribute('aria-pressed',m==='B');$('#swS').setAttribute('aria-pressed',m==='S');
+ applyViews();refresh();layoutB();window.scrollTo(0,0);try{localStorage.setItem('rupra:mode',m)}catch{}}
+$('#swA').onclick=()=>show('A');$('#swB').onclick=()=>show('B');$('#swS').onclick=()=>show('S');
+/* ============ start ============ */
+initOut();applyTeams();renderSetup();render();
+(async()=>{await initDb();let m='A';try{m=localStorage.getItem('rupra:mode')||'A'}catch{}
+ if(m!=='A'){inSetup=false;show(m)}})();
 </script>
